@@ -7,10 +7,10 @@ import { BotonImprimir } from "../../../_components/BotonImprimir";
 
 const printCSS = `
 @media print {
-  @page { size: A4 landscape; margin: 8mm; }
+  @page { size: A4 landscape; margin: 6mm; }
   .no-print { display: none !important; }
   html, body { background: #ffffff !important; }
-  .constancia { box-shadow: none !important; border-radius: 0 !important; }
+  .constancia { box-shadow: none !important; }
   .reverso { page-break-before: always; }
   .editable { border-bottom: none !important; background: transparent !important; }
 }
@@ -56,7 +56,7 @@ export default async function ConstanciaPage({
     year: "numeric",
   }).format(new Date());
 
-  // Datos del registro oficial (los asigna el admin — pendientes hasta el folio).
+  // Registro oficial (lo asigna el admin — pendiente hasta el folio).
   const libro = "____";
   const hoja = "____";
   const folio = "____";
@@ -84,229 +84,281 @@ export default async function ConstanciaPage({
         (fecha, libro, hoja, folio) para editarlos antes de imprimir.
       </p>
 
-      {/* Constancia */}
       <div className="py-8 px-4 flex flex-col items-center gap-8">
+        {/* ===== FRENTE ===== */}
         <div
           className="constancia w-full max-w-[1000px] bg-white shadow-xl"
-          style={{ padding: "40px 48px", border: "6px double #16406F" }}
+          style={{ border: "10px solid #c3cfe0", padding: "8px" }}
         >
-          {/* Logos */}
-          <div className="flex items-center justify-between">
+          <div
+            style={{
+              border: "1px solid #16406F",
+              padding: "26px 40px",
+              position: "relative",
+              overflow: "hidden",
+            }}
+          >
+            {/* Marca de agua */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/constancia/health-professionals.png"
-              alt="Colegio de Formación para Profesionales de la Salud"
-              style={{ height: "88px", width: "auto" }}
+              src="/constancia/ilustracion.png"
+              alt=""
+              aria-hidden="true"
+              style={{
+                position: "absolute",
+                top: "54%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                width: "52%",
+                opacity: 0.06,
+                pointerEvents: "none",
+              }}
             />
-            <div className="text-center">
+
+            <div style={{ position: "relative" }}>
+              {/* Logo EE-UCI */}
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/constancia/eeuci.png"
                 alt="EE-UCI"
-                style={{ height: "96px", width: "auto", margin: "0 auto" }}
+                style={{ height: "92px", display: "block", margin: "0 auto" }}
               />
-              <p
-                className="mt-1 text-[10px] tracking-[0.2em] font-bold"
-                style={{ color: "#16406F" }}
+
+              {/* Título */}
+              <h1
+                style={{
+                  textAlign: "center",
+                  color: "#2E52A5",
+                  fontWeight: "bold",
+                  fontSize: "25px",
+                  lineHeight: 1.2,
+                  margin: "10px 0 0",
+                }}
               >
-                ENTRENAMIENTO DE ENFERMERÍA EN UCI
+                ENTRENAMIENTO DE ENFERMERIA EN UCI
+                <br />
+                EE-UCI
+              </h1>
+
+              <p
+                style={{
+                  textAlign: "center",
+                  color: "#64748b",
+                  fontSize: "15px",
+                  letterSpacing: "0.08em",
+                  margin: "14px 0 0",
+                }}
+              >
+                OTORGA LA PRESENTE CONSTANCIA A:
+              </p>
+
+              {/* Nombre */}
+              <p
+                style={{
+                  textAlign: "center",
+                  color: "#0f172a",
+                  fontSize: "32px",
+                  fontWeight: "bold",
+                  margin: "12px 0",
+                }}
+              >
+                {nombre}
+              </p>
+
+              <p
+                style={{
+                  textAlign: "center",
+                  color: "#334155",
+                  fontSize: "15px",
+                  margin: "6px 0 0",
+                }}
+              >
+                Por su participación en el curso taller de:
+              </p>
+              <p
+                style={{
+                  textAlign: "center",
+                  color: "#0f172a",
+                  fontSize: "17px",
+                  fontWeight: 600,
+                  margin: "4px 0",
+                }}
+              >
+                {curso.curso.toUpperCase()}
+              </p>
+              <p
+                style={{
+                  textAlign: "center",
+                  color: "#334155",
+                  fontSize: "15px",
+                  margin: "2px 0 0",
+                }}
+              >
+                Con un valor curricular de {curso.horas} hrs.
+              </p>
+
+              {/* Firma central — Carlos Mejía */}
+              <div style={{ textAlign: "center", marginTop: "16px" }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/constancia/firma-carlos.png"
+                  alt="Firma"
+                  style={{ height: "52px", display: "block", margin: "0 auto -4px" }}
+                />
+                <p
+                  style={{
+                    color: "#9A7B3F",
+                    fontWeight: 600,
+                    fontSize: "16px",
+                    letterSpacing: "0.03em",
+                    margin: 0,
+                  }}
+                >
+                  E.E.A.E.C. CARLOS MEJÍA MENDUETT
+                </p>
+                <p
+                  style={{
+                    color: "#9A7B3F",
+                    fontWeight: 600,
+                    fontSize: "15px",
+                    letterSpacing: "0.03em",
+                    margin: 0,
+                  }}
+                >
+                  PROFESOR TITULAR
+                </p>
+              </div>
+
+              {/* Sellos + firmas (izquierda / derecha) */}
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "flex-end",
+                  marginTop: "14px",
+                }}
+              >
+                {/* Izquierda — Health Professionals / Viridiana */}
+                <div style={{ width: "33%", textAlign: "center" }}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="/constancia/health-professionals.png"
+                    alt=""
+                    style={{ height: "66px", display: "block", margin: "0 auto" }}
+                  />
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="/constancia/firma-2.png"
+                    alt=""
+                    style={{ height: "32px", display: "block", margin: "2px auto -2px" }}
+                  />
+                  <p style={{ fontSize: "11px", fontWeight: 700, color: "#0f172a", margin: 0 }}>
+                    L.E Viridiana Monserrat Gutiérrez Amador
+                  </p>
+                  <p style={{ fontSize: "11px", color: "#64748b", margin: 0 }}>
+                    Presidente
+                  </p>
+                </div>
+
+                {/* Derecha — CEFCE / Dr. Juvencio */}
+                <div style={{ width: "33%", textAlign: "center" }}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="/constancia/cefce.png"
+                    alt=""
+                    style={{ height: "58px", display: "block", margin: "0 auto 4px" }}
+                  />
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="/constancia/firma-1.png"
+                    alt=""
+                    style={{ height: "32px", display: "block", margin: "2px auto -2px" }}
+                  />
+                  <p style={{ fontSize: "11px", fontWeight: 700, color: "#0f172a", margin: 0 }}>
+                    Dr. Juvencio Bautista Antonio
+                  </p>
+                  <p style={{ fontSize: "11px", color: "#64748b", margin: 0 }}>
+                    Titular de CEFCE
+                  </p>
+                </div>
+              </div>
+
+              {/* Fecha */}
+              <p
+                style={{
+                  textAlign: "center",
+                  fontSize: "14px",
+                  color: "#0f172a",
+                  marginTop: "10px",
+                }}
+              >
+                Ciudad de México{" "}
+                <span contentEditable suppressContentEditableWarning className="editable">
+                  {fecha}
+                </span>
               </p>
             </div>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/constancia/cefce.png"
-              alt="CEFCE"
-              style={{ height: "80px", width: "auto" }}
-            />
-          </div>
-
-          {/* Título */}
-          <h1
-            className="font-[family-name:var(--font-serif)] text-center mt-6"
-            style={{
-              color: "#16406F",
-              fontSize: "40px",
-              fontWeight: 700,
-              letterSpacing: "0.15em",
-            }}
-          >
-            CONSTANCIA
-          </h1>
-
-          {/* Cuerpo */}
-          <div className="text-center mt-5">
-            <p style={{ color: "#475569", fontSize: "14px" }}>
-              Otorga la presente constancia a:
-            </p>
-            <p
-              className="font-[family-name:var(--font-serif)]"
-              style={{
-                color: "#0f172a",
-                fontSize: "30px",
-                fontWeight: 700,
-                margin: "8px 0",
-              }}
-            >
-              {nombre}
-            </p>
-            <div
-              style={{
-                width: "60%",
-                height: "1px",
-                background: "#cbd5e1",
-                margin: "6px auto 16px",
-              }}
-            />
-            <p style={{ color: "#475569", fontSize: "14px" }}>
-              Por su participación en el curso taller de:
-            </p>
-            <p
-              style={{
-                color: "#C8172E",
-                fontSize: "20px",
-                fontWeight: 700,
-                margin: "6px 0",
-              }}
-            >
-              {curso.curso}
-            </p>
-            <p style={{ color: "#334155", fontSize: "15px", marginTop: "8px" }}>
-              Con un valor curricular de{" "}
-              <strong>
-                {curso.horas} {curso.horas === 1 ? "hora" : "horas"}
-              </strong>
-              .
-            </p>
-          </div>
-
-          {/* Firmas */}
-          <div
-            className="flex items-end justify-around"
-            style={{ marginTop: "40px" }}
-          >
-            <div className="text-center" style={{ width: "40%" }}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/constancia/firma-2.png"
-                alt="Firma"
-                style={{ height: "66px", margin: "0 auto -10px" }}
-              />
-              <div style={{ borderTop: "1px solid #334155", paddingTop: "6px" }}>
-                <p style={{ fontSize: "13px", fontWeight: 700, color: "#0f172a" }}>
-                  L.E. Viridiana Monserrat Gutiérrez Amador
-                </p>
-                <p style={{ fontSize: "12px", color: "#64748b" }}>Presidente</p>
-              </div>
-            </div>
-            <div className="text-center" style={{ width: "40%" }}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/constancia/firma-1.png"
-                alt="Firma"
-                style={{ height: "66px", margin: "0 auto -10px" }}
-              />
-              <div style={{ borderTop: "1px solid #334155", paddingTop: "6px" }}>
-                <p style={{ fontSize: "13px", fontWeight: 700, color: "#0f172a" }}>
-                  Dr. Juvencio Bautista Antonio
-                </p>
-                <p style={{ fontSize: "12px", color: "#64748b" }}>
-                  Titular de CEFCE
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Pie */}
-          <div
-            className="text-center"
-            style={{ marginTop: "28px", fontSize: "12px", color: "#64748b" }}
-          >
-            Ciudad de México, a{" "}
-            <span contentEditable suppressContentEditableWarning className="editable">
-              {fecha}
-            </span>
-            .
           </div>
         </div>
 
         {/* ===== REVERSO — registro oficial ===== */}
         <div
           className="constancia reverso w-full max-w-[1000px] bg-white shadow-xl"
-          style={{
-            padding: "40px 48px",
-            border: "6px double #16406F",
-            minHeight: "640px",
-          }}
+          style={{ border: "10px solid #c3cfe0", padding: "8px" }}
         >
-          <div style={{ maxWidth: "64%" }}>
-            <div className="flex items-start justify-between gap-4">
-              <p
-                style={{
-                  fontWeight: 700,
-                  color: "#0f172a",
-                  fontSize: "15px",
-                  lineHeight: 1.35,
-                }}
-              >
-                Colegio de Formación para
-                <br /> Profesionales de la Salud
-              </p>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/constancia/health-professionals.png"
-                alt="Colegio de Formación para Profesionales de la Salud"
-                style={{ height: "96px", width: "auto" }}
-              />
-            </div>
-
-            <div
-              style={{
-                marginTop: "6px",
-                fontSize: "14px",
-                color: "#0f172a",
-                lineHeight: 2,
-              }}
-            >
-              <p style={{ margin: 0 }}>
-                Libro:{" "}
-                <span contentEditable suppressContentEditableWarning className="editable">{libro}</span>
-              </p>
-              <p style={{ margin: 0 }}>
-                Hoja:{" "}
-                <span contentEditable suppressContentEditableWarning className="editable">{hoja}</span>
-                {"    "}Folio:{" "}
-                <span contentEditable suppressContentEditableWarning className="editable">{folio}</span>
-              </p>
-              <p style={{ margin: 0 }}>
-                Fecha:{" "}
-                <span contentEditable suppressContentEditableWarning className="editable">{fecha}</span>
-              </p>
-            </div>
-
-            <div className="text-center" style={{ marginTop: "26px" }}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/constancia/firma-2.png"
-                alt="Firma"
-                style={{ height: "66px", margin: "0 auto -10px" }}
-              />
-              <div
-                style={{ borderTop: "1px solid #334155", paddingTop: "6px" }}
-              >
-                <p
-                  style={{
-                    fontSize: "13px",
-                    fontWeight: 700,
-                    color: "#0f172a",
-                    margin: 0,
-                  }}
-                >
-                  L.E. Viridiana Monserrat Gutiérrez Amador
+          <div
+            style={{
+              border: "1px solid #16406F",
+              padding: "40px 48px",
+              minHeight: "600px",
+            }}
+          >
+            <div style={{ maxWidth: "64%" }}>
+              <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "16px" }}>
+                <p style={{ fontWeight: 700, color: "#0f172a", fontSize: "15px", lineHeight: 1.35 }}>
+                  Colegio de Formación para
+                  <br /> Profesionales de la Salud
                 </p>
-                <p style={{ fontSize: "12px", color: "#64748b", margin: 0 }}>
-                  Presidente del Colegio de Formación para Profesionales de la
-                  Salud
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/constancia/health-professionals.png"
+                  alt="Colegio de Formación para Profesionales de la Salud"
+                  style={{ height: "96px", width: "auto" }}
+                />
+              </div>
+
+              <div style={{ marginTop: "6px", fontSize: "14px", color: "#0f172a", lineHeight: 2 }}>
+                <p style={{ margin: 0 }}>
+                  Libro:{" "}
+                  <span contentEditable suppressContentEditableWarning className="editable">{libro}</span>
                 </p>
+                <p style={{ margin: 0 }}>
+                  Hoja:{" "}
+                  <span contentEditable suppressContentEditableWarning className="editable">{hoja}</span>
+                  {"    "}Folio:{" "}
+                  <span contentEditable suppressContentEditableWarning className="editable">{folio}</span>
+                </p>
+                <p style={{ margin: 0 }}>
+                  Fecha:{" "}
+                  <span contentEditable suppressContentEditableWarning className="editable">{fecha}</span>
+                </p>
+              </div>
+
+              <div className="text-center" style={{ marginTop: "26px" }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/constancia/firma-2.png"
+                  alt="Firma"
+                  style={{ height: "66px", margin: "0 auto -10px" }}
+                />
+                <div style={{ borderTop: "1px solid #334155", paddingTop: "6px" }}>
+                  <p style={{ fontSize: "13px", fontWeight: 700, color: "#0f172a", margin: 0 }}>
+                    L.E. Viridiana Monserrat Gutiérrez Amador
+                  </p>
+                  <p style={{ fontSize: "12px", color: "#64748b", margin: 0 }}>
+                    Presidente del Colegio de Formación para Profesionales de la Salud
+                  </p>
+                </div>
               </div>
             </div>
           </div>
