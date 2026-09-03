@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { tieneSuscripcionActiva } from "@/lib/stripe";
-import { getCurso } from "../../../_data/constancias";
+import { getConstancia } from "../../../_data/constancias";
 import { BotonImprimir } from "../../../_components/BotonImprimir";
 
 const printCSS = `
@@ -39,8 +39,8 @@ export default async function ConstanciaPage({
   }
 
   const { slug } = await params;
-  const curso = getCurso(slug);
-  if (!curso) {
+  const constancia = getConstancia(slug);
+  if (!constancia) {
     notFound();
   }
 
@@ -184,7 +184,7 @@ export default async function ConstanciaPage({
                   margin: "4px 0",
                 }}
               >
-                {curso.curso.toUpperCase()}
+                {constancia.titulo.toUpperCase()}
               </p>
               <p
                 style={{
@@ -194,7 +194,7 @@ export default async function ConstanciaPage({
                   margin: "2px 0 0",
                 }}
               >
-                Con un valor curricular de {curso.horas} hrs.
+                Con un valor curricular de {constancia.horas} hrs.
               </p>
 
               {/* Firma central — Carlos Mejía */}

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { getEspecialidad } from "../../_data/catalogo";
+import { constanciasDeEspecialidad } from "../../_data/constancias";
 import { FondoMedico } from "../../_components/FondoMedico";
 import { Logo } from "../../_components/Logo";
 import { tieneSuscripcionActiva } from "@/lib/stripe";
@@ -195,17 +196,26 @@ function ListaClases({
 
       <div className="mt-8 rounded-2xl border border-[#FFC629]/30 bg-white/5 p-6">
         <p className="font-semibold text-white">
-          ¿Completaste esta especialidad?
+          Constancias con valor curricular
         </p>
         <p className="text-sm text-white/60 mt-1">
-          Descarga tu constancia con valor curricular.
+          Obtén una constancia por cada clase que completes.
         </p>
-        <Link
-          href={`/miembros/constancia/${especialidad.slug}`}
-          className="inline-block mt-4 rounded-lg bg-[#FFC629] text-[#2a0a0e] font-bold px-5 py-2.5 hover:brightness-105 transition"
-        >
-          Ver mi constancia →
-        </Link>
+        <ul className="mt-4 space-y-2">
+          {constanciasDeEspecialidad(especialidad.slug).map((c) => (
+            <li key={c.id}>
+              <Link
+                href={`/miembros/constancia/${c.id}`}
+                className="flex items-center justify-between gap-3 rounded-lg bg-white/5 border border-white/10 px-4 py-2.5 hover:bg-white/10 transition"
+              >
+                <span className="text-sm text-white">{c.titulo}</span>
+                <span className="shrink-0 text-xs font-bold text-[#FFC629]">
+                  {c.horas} h · Ver →
+                </span>
+              </Link>
+            </li>
+          ))}
+        </ul>
       </div>
     </>
   );
