@@ -12,8 +12,11 @@ const printCSS = `
   html, body { background: #ffffff !important; }
   .constancia { box-shadow: none !important; border-radius: 0 !important; }
   .reverso { page-break-before: always; }
+  .editable { border-bottom: none !important; background: transparent !important; }
 }
 .constancia { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.editable { border-bottom: 1px dashed #94a3b8; padding: 0 6px; outline: none; border-radius: 2px; cursor: text; }
+.editable:focus { background: #fef9c3; }
 `;
 
 export default async function ConstanciaPage({
@@ -74,6 +77,12 @@ export default async function ConstanciaPage({
           <BotonImprimir />
         </div>
       </div>
+
+      <p className="no-print text-center text-xs text-slate-500 pt-4 px-4">
+        Haz clic en los campos{" "}
+        <span style={{ borderBottom: "1px dashed #94a3b8" }}>subrayados</span>{" "}
+        (fecha, libro, hoja, folio) para editarlos antes de imprimir.
+      </p>
 
       {/* Constancia */}
       <div className="py-8 px-4 flex flex-col items-center gap-8">
@@ -178,9 +187,9 @@ export default async function ConstanciaPage({
             <div className="text-center" style={{ width: "40%" }}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/constancia/firma-1.png"
+                src="/constancia/firma-2.png"
                 alt="Firma"
-                style={{ height: "56px", margin: "0 auto -6px" }}
+                style={{ height: "66px", margin: "0 auto -10px" }}
               />
               <div style={{ borderTop: "1px solid #334155", paddingTop: "6px" }}>
                 <p style={{ fontSize: "13px", fontWeight: 700, color: "#0f172a" }}>
@@ -192,9 +201,9 @@ export default async function ConstanciaPage({
             <div className="text-center" style={{ width: "40%" }}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/constancia/firma-2.png"
+                src="/constancia/firma-1.png"
                 alt="Firma"
-                style={{ height: "56px", margin: "0 auto -6px" }}
+                style={{ height: "66px", margin: "0 auto -10px" }}
               />
               <div style={{ borderTop: "1px solid #334155", paddingTop: "6px" }}>
                 <p style={{ fontSize: "13px", fontWeight: 700, color: "#0f172a" }}>
@@ -212,7 +221,11 @@ export default async function ConstanciaPage({
             className="text-center"
             style={{ marginTop: "28px", fontSize: "12px", color: "#64748b" }}
           >
-            Ciudad de México, a {fecha}.
+            Ciudad de México, a{" "}
+            <span contentEditable suppressContentEditableWarning className="editable">
+              {fecha}
+            </span>
+            .
           </div>
         </div>
 
@@ -255,24 +268,27 @@ export default async function ConstanciaPage({
               }}
             >
               <p style={{ margin: 0 }}>
-                Libro: <strong>{libro}</strong>
+                Libro:{" "}
+                <span contentEditable suppressContentEditableWarning className="editable">{libro}</span>
               </p>
               <p style={{ margin: 0 }}>
-                Hoja: <strong>{hoja}</strong>
-                {"    "}Folio: <strong>{folio}</strong>
+                Hoja:{" "}
+                <span contentEditable suppressContentEditableWarning className="editable">{hoja}</span>
+                {"    "}Folio:{" "}
+                <span contentEditable suppressContentEditableWarning className="editable">{folio}</span>
               </p>
               <p style={{ margin: 0 }}>
                 Fecha:{" "}
-                <span style={{ textDecoration: "underline" }}>{fecha}</span>
+                <span contentEditable suppressContentEditableWarning className="editable">{fecha}</span>
               </p>
             </div>
 
             <div className="text-center" style={{ marginTop: "26px" }}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/constancia/firma-1.png"
+                src="/constancia/firma-2.png"
                 alt="Firma"
-                style={{ height: "56px", margin: "0 auto -6px" }}
+                style={{ height: "66px", margin: "0 auto -10px" }}
               />
               <div
                 style={{ borderTop: "1px solid #334155", paddingTop: "6px" }}
