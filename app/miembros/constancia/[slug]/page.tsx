@@ -11,6 +11,7 @@ const printCSS = `
   .no-print { display: none !important; }
   html, body { background: #ffffff !important; }
   .constancia { box-shadow: none !important; border-radius: 0 !important; }
+  .reverso { page-break-before: always; }
 }
 .constancia { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 `;
@@ -52,6 +53,11 @@ export default async function ConstanciaPage({
     year: "numeric",
   }).format(new Date());
 
+  // Datos del registro oficial (los asigna el admin — pendientes hasta el folio).
+  const libro = "____";
+  const hoja = "____";
+  const folio = "____";
+
   return (
     <div className="min-h-screen bg-slate-200">
       <style dangerouslySetInnerHTML={{ __html: printCSS }} />
@@ -70,7 +76,7 @@ export default async function ConstanciaPage({
       </div>
 
       {/* Constancia */}
-      <div className="py-8 px-4 flex justify-center">
+      <div className="py-8 px-4 flex flex-col items-center gap-8">
         <div
           className="constancia w-full max-w-[1000px] bg-white shadow-xl"
           style={{ padding: "40px 48px", border: "6px double #16406F" }}
@@ -203,11 +209,90 @@ export default async function ConstanciaPage({
 
           {/* Pie */}
           <div
-            className="flex items-center justify-between"
+            className="text-center"
             style={{ marginTop: "28px", fontSize: "12px", color: "#64748b" }}
           >
-            <span>Ciudad de México, a {fecha}.</span>
-            <span>Folio: ________</span>
+            Ciudad de México, a {fecha}.
+          </div>
+        </div>
+
+        {/* ===== REVERSO — registro oficial ===== */}
+        <div
+          className="constancia reverso w-full max-w-[1000px] bg-white shadow-xl"
+          style={{
+            padding: "40px 48px",
+            border: "6px double #16406F",
+            minHeight: "640px",
+          }}
+        >
+          <div style={{ maxWidth: "64%" }}>
+            <div className="flex items-start justify-between gap-4">
+              <p
+                style={{
+                  fontWeight: 700,
+                  color: "#0f172a",
+                  fontSize: "15px",
+                  lineHeight: 1.35,
+                }}
+              >
+                Colegio de Formación para
+                <br /> Profesionales de la Salud
+              </p>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/constancia/health-professionals.png"
+                alt="Colegio de Formación para Profesionales de la Salud"
+                style={{ height: "96px", width: "auto" }}
+              />
+            </div>
+
+            <div
+              style={{
+                marginTop: "6px",
+                fontSize: "14px",
+                color: "#0f172a",
+                lineHeight: 2,
+              }}
+            >
+              <p style={{ margin: 0 }}>
+                Libro: <strong>{libro}</strong>
+              </p>
+              <p style={{ margin: 0 }}>
+                Hoja: <strong>{hoja}</strong>
+                {"    "}Folio: <strong>{folio}</strong>
+              </p>
+              <p style={{ margin: 0 }}>
+                Fecha:{" "}
+                <span style={{ textDecoration: "underline" }}>{fecha}</span>
+              </p>
+            </div>
+
+            <div className="text-center" style={{ marginTop: "26px" }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/constancia/firma-1.png"
+                alt="Firma"
+                style={{ height: "56px", margin: "0 auto -6px" }}
+              />
+              <div
+                style={{ borderTop: "1px solid #334155", paddingTop: "6px" }}
+              >
+                <p
+                  style={{
+                    fontSize: "13px",
+                    fontWeight: 700,
+                    color: "#0f172a",
+                    margin: 0,
+                  }}
+                >
+                  L.E. Viridiana Monserrat Gutiérrez Amador
+                </p>
+                <p style={{ fontSize: "12px", color: "#64748b", margin: 0 }}>
+                  Presidente del Colegio de Formación para Profesionales de la
+                  Salud
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
