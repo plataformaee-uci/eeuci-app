@@ -238,29 +238,7 @@ export default async function ConstanciaPage({
                   marginTop: "14px",
                 }}
               >
-                {/* Izquierda — Health Professionals / Viridiana */}
-                <div style={{ width: "33%", textAlign: "center" }}>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src="/constancia/health-professionals.png"
-                    alt=""
-                    style={{ height: "66px", display: "block", margin: "0 auto" }}
-                  />
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src="/constancia/firma-2.png"
-                    alt=""
-                    style={{ height: "32px", display: "block", margin: "2px auto -2px" }}
-                  />
-                  <p style={{ fontSize: "11px", fontWeight: 700, color: "#0f172a", margin: 0 }}>
-                    L.E Viridiana Monserrat Gutiérrez Amador
-                  </p>
-                  <p style={{ fontSize: "11px", color: "#64748b", margin: 0 }}>
-                    Presidente
-                  </p>
-                </div>
-
-                {/* Derecha — CEFCE / Dr. Juvencio */}
+                {/* Izquierda — CEFCE / Dr. Juvencio */}
                 <div style={{ width: "33%", textAlign: "center" }}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
@@ -279,6 +257,28 @@ export default async function ConstanciaPage({
                   </p>
                   <p style={{ fontSize: "11px", color: "#64748b", margin: 0 }}>
                     Titular de CEFCE
+                  </p>
+                </div>
+
+                {/* Derecha — Health Professionals / Viridiana */}
+                <div style={{ width: "33%", textAlign: "center" }}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="/constancia/health-professionals.png"
+                    alt=""
+                    style={{ height: "66px", display: "block", margin: "0 auto" }}
+                  />
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="/constancia/firma-2.png"
+                    alt=""
+                    style={{ height: "32px", display: "block", margin: "2px auto -2px" }}
+                  />
+                  <p style={{ fontSize: "11px", fontWeight: 700, color: "#0f172a", margin: 0 }}>
+                    L.E Viridiana Monserrat Gutiérrez Amador
+                  </p>
+                  <p style={{ fontSize: "11px", color: "#64748b", margin: 0 }}>
+                    Presidente
                   </p>
                 </div>
               </div>
