@@ -199,7 +199,8 @@ function ListaClases({
           Constancias con valor curricular
         </p>
         <p className="text-sm text-white/60 mt-1">
-          Obtén una constancia por cada clase que completes.
+          Constancia oficial con valor curricular por cada clase (pago único
+          aparte de la suscripción).
         </p>
         <ul className="mt-4 space-y-2">
           {constanciasDeEspecialidad(especialidad.slug).map((c) => (
@@ -210,7 +211,7 @@ function ListaClases({
               >
                 <span className="text-sm text-white">{c.titulo}</span>
                 <span className="shrink-0 text-xs font-bold text-[#FFC629]">
-                  {c.horas} h · Ver →
+                  {c.horas} h · ${(c.horas / 2) * 150} · Ver →
                 </span>
               </Link>
             </li>

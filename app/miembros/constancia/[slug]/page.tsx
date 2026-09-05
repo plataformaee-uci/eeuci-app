@@ -1,9 +1,11 @@
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { tieneSuscripcionActiva } from "@/lib/stripe";
+import { tieneSuscripcionActiva, haCompradoConstancia } from "@/lib/stripe";
 import { getConstancia } from "../../../_data/constancias";
 import { BotonImprimir } from "../../../_components/BotonImprimir";
+import { FondoMedico } from "../../../_components/FondoMedico";
+import { Logo } from "../../../_components/Logo";
 
 const printCSS = `
 @media print {
@@ -21,8 +23,10 @@ const printCSS = `
 
 export default async function ConstanciaPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ slug: string }>;
+  searchParams: Promise<{ error?: string }>;
 }) {
   const supabase = await createClient();
   const {
@@ -42,6 +46,21 @@ export default async function ConstanciaPage({
   const constancia = getConstancia(slug);
   if (!constancia) {
     notFound();
+  }
+
+  // Cada constancia se paga aparte ($150 por cada módulo de 2 h).
+  const comprado = await haCompradoConstancia(user.email, slug);
+  if (!comprado) {
+    const { error } = await searchParams;
+    return (
+      <PaywallConstancia
+        slug={slug}
+        titulo={constancia.titulo}
+        horas={constancia.horas}
+        precio={(constancia.horas / 2) * 150}
+        conError={error === "compra"}
+      />
+    );
   }
 
   const nombre = (
@@ -364,6 +383,80 @@ export default async function ConstanciaPage({
           </div>
         </div>
       </div>
+    </div>
+  );
+}
+
+function PaywallConstancia({
+  slug,
+  titulo,
+  horas,
+  precio,
+  conError,
+}: {
+  slug: string;
+  titulo: string;
+  horas: number;
+  precio: number;
+  conError: boolean;
+}) {
+  return (
+    <div className="min-h-screen text-white">
+      <FondoMedico />
+      <header className="border-b border-white/10 bg-[#180407]/60 backdrop-blur-md">
+        <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
+          <Logo href="/miembros" />
+          <Link
+            href="/miembros"
+            className="text-sm font-semibold text-white/70 hover:text-white transition"
+          >
+            ← Volver
+          </Link>
+        </div>
+      </header>
+      <main className="max-w-lg mx-auto px-6 py-16">
+        {conError && (
+          <p className="mb-5 rounded-lg bg-[#C8172E]/20 border border-[#C8172E]/40 px-4 py-3 text-sm text-white">
+            No pudimos iniciar el pago. Intenta de nuevo en un momento.
+          </p>
+        )}
+        <div className="rounded-3xl border border-[#FFC629]/30 bg-white/5 p-8 backdrop-blur-sm">
+          <p className="text-xs uppercase tracking-widest text-[#FFC629] font-bold">
+            Constancia con valor curricular
+          </p>
+          <h1 className="font-[family-name:var(--font-serif)] text-2xl font-bold text-white mt-2">
+            {titulo}
+          </h1>
+          <p className="text-white/70 mt-2 text-sm">
+            Valor curricular: {horas} horas
+          </p>
+          <div className="mt-5 flex items-end gap-1">
+            <span className="font-[family-name:var(--font-serif)] text-5xl font-bold text-white">
+              ${precio}
+            </span>
+            <span className="text-white/60 mb-2">MXN</span>
+          </div>
+          <p className="text-sm text-white/70 mt-4">
+            Obtén tu constancia oficial (frente y reverso) con folio, avalada por
+            el Colegio de Formación para Profesionales de la Salud y CEFCE.
+          </p>
+          <form
+            action={`/api/comprar-constancia?id=${slug}`}
+            method="post"
+            className="mt-6"
+          >
+            <button
+              type="submit"
+              className="w-full rounded-lg bg-[#FFC629] text-[#2a0a0e] font-bold py-3.5 hover:brightness-105 transition"
+            >
+              Comprar constancia — ${precio}
+            </button>
+          </form>
+          <p className="text-center text-xs text-white/50 mt-3">
+            Pago único y seguro con Stripe.
+          </p>
+        </div>
+      </main>
     </div>
   );
 }

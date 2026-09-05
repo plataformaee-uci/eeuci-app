@@ -34,3 +34,33 @@ export async function tieneSuscripcionActiva(
     return false;
   }
 }
+
+// ¿El usuario ya pagó (compró) una constancia específica?
+export async function haCompradoConstancia(
+  email: string | null | undefined,
+  constanciaId: string,
+): Promise<boolean> {
+  if (!email || !process.env.STRIPE_SECRET_KEY) return false;
+  try {
+    const customers = await stripe.customers.list({ email, limit: 20 });
+    for (const cliente of customers.data) {
+      const sesiones = await stripe.checkout.sessions.list({
+        customer: cliente.id,
+        limit: 100,
+      });
+      if (
+        sesiones.data.some(
+          (s) =>
+            s.payment_status === "paid" &&
+            s.metadata?.constancia_id === constanciaId,
+        )
+      ) {
+        return true;
+      }
+    }
+    return false;
+  } catch (error) {
+    console.error("Error verificando compra de constancia:", error);
+    return false;
+  }
+}
