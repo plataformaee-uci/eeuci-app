@@ -22,6 +22,9 @@ const printCSS = `
 .editable:focus { background: #fef9c3; }
 `;
 
+// Siempre leer fresco de la base (el folio puede cambiar en cualquier momento).
+export const dynamic = "force-dynamic";
+
 export default async function ConstanciaPage({
   params,
   searchParams,

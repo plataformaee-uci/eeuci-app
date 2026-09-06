@@ -16,6 +16,9 @@ type Registro = {
   fecha: string | null;
 };
 
+// Siempre leer fresco de la base para ver las compras y folios al día.
+export const dynamic = "force-dynamic";
+
 export default async function AdminPage() {
   const supabase = await createClient();
   const {
