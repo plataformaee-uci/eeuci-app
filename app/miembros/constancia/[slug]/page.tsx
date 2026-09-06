@@ -121,7 +121,7 @@ export default async function ConstanciaPage({
       <div className="no-print sticky top-0 z-10 bg-[#180407] text-white">
         <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
           <Link
-            href={`/miembros/${slug}`}
+            href={`/miembros/${constancia.especialidad}`}
             className="text-sm font-semibold text-white/80 hover:text-white transition"
           >
             ← Volver
