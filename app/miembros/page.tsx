@@ -5,6 +5,7 @@ import { especialidades } from "../_data/catalogo";
 import { FondoMedico } from "../_components/FondoMedico";
 import { Logo } from "../_components/Logo";
 import { tieneSuscripcionActiva } from "@/lib/stripe";
+import { esAdmin } from "@/lib/supabase/admin";
 
 const totalClases = especialidades.reduce((n, e) => n + e.clases.length, 0);
 
@@ -34,14 +35,24 @@ export default async function MiembrosPage({
       <header className="border-b border-white/10 bg-[#180407]/60 backdrop-blur-md">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <Logo href="/miembros" />
-          <form action="/auth/signout" method="post">
-            <button
-              type="submit"
-              className="text-sm font-semibold text-white/70 hover:text-white transition"
-            >
-              Cerrar sesión
-            </button>
-          </form>
+          <div className="flex items-center gap-4">
+            {esAdmin(user.email) && (
+              <Link
+                href="/miembros/admin"
+                className="text-sm font-bold text-[#FFC629] hover:brightness-110 transition"
+              >
+                Admin
+              </Link>
+            )}
+            <form action="/auth/signout" method="post">
+              <button
+                type="submit"
+                className="text-sm font-semibold text-white/70 hover:text-white transition"
+              >
+                Cerrar sesión
+              </button>
+            </form>
+          </div>
         </div>
       </header>
 

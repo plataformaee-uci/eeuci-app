@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { tieneSuscripcionActiva, haCompradoConstancia } from "@/lib/stripe";
 import { getConstancia } from "../../../_data/constancias";
 import { BotonImprimir } from "../../../_components/BotonImprimir";
@@ -63,22 +64,51 @@ export default async function ConstanciaPage({
     );
   }
 
-  const nombre = (
-    (user.user_metadata?.nombre as string | undefined) ??
-    user.email ??
-    ""
-  ).toUpperCase();
+  const nombreOriginal =
+    (user.user_metadata?.nombre as string | undefined) ?? user.email ?? "";
+  const nombre = nombreOriginal.toUpperCase();
 
-  const fecha = new Intl.DateTimeFormat("es-MX", {
+  // Registra la compra (para que aparezca en el panel de admin) y lee el
+  // folio que el administrador haya asignado. Si la BD aún no está lista,
+  // la constancia sigue mostrándose con el folio "En trámite".
+  let registro: {
+    libro: string | null;
+    hoja: string | null;
+    folio: string | null;
+    fecha: string | null;
+  } | null = null;
+  try {
+    const admin = createAdminClient();
+    await admin.from("constancias_folios").upsert(
+      {
+        email: user.email,
+        nombre: nombreOriginal,
+        constancia_id: slug,
+        constancia_titulo: constancia.titulo,
+      },
+      { onConflict: "email,constancia_id", ignoreDuplicates: true },
+    );
+    const { data } = await admin
+      .from("constancias_folios")
+      .select("libro, hoja, folio, fecha")
+      .eq("email", user.email)
+      .eq("constancia_id", slug)
+      .maybeSingle();
+    registro = data;
+  } catch (error) {
+    console.error("Registro de constancia no disponible:", error);
+  }
+
+  const hoy = new Intl.DateTimeFormat("es-MX", {
     day: "numeric",
     month: "long",
     year: "numeric",
   }).format(new Date());
 
-  // Registro oficial (lo asigna el admin — pendiente hasta el folio).
-  const libro = "____";
-  const hoja = "____";
-  const folio = "____";
+  const libro = registro?.libro || "En trámite";
+  const hoja = registro?.hoja || "En trámite";
+  const folio = registro?.folio || "En trámite";
+  const fecha = registro?.fecha || hoy;
 
   return (
     <div className="min-h-screen bg-slate-200">
@@ -99,9 +129,8 @@ export default async function ConstanciaPage({
 
       <div className="no-print text-center text-xs text-slate-500 pt-4 px-4 space-y-1">
         <p>
-          Haz clic en los campos{" "}
-          <span style={{ borderBottom: "1px dashed #94a3b8" }}>subrayados</span>{" "}
-          (fecha, libro, hoja, folio) para editarlos antes de imprimir.
+          El folio oficial lo asigna la administración. Si aún aparece{" "}
+          <strong>“En trámite”</strong>, estará disponible en breve.
         </p>
         <p>
           Al imprimir/guardar PDF: elige orientación{" "}
@@ -318,10 +347,7 @@ export default async function ConstanciaPage({
                   marginTop: "4px",
                 }}
               >
-                Ciudad de México{" "}
-                <span contentEditable suppressContentEditableWarning className="editable">
-                  {fecha}
-                </span>
+                Ciudad de México {fecha}
               </p>
             </div>
           </div>
@@ -356,17 +382,17 @@ export default async function ConstanciaPage({
               <div style={{ marginTop: "6px", fontSize: "14px", color: "#0f172a", lineHeight: 2 }}>
                 <p style={{ margin: 0 }}>
                   Libro:{" "}
-                  <span contentEditable suppressContentEditableWarning className="editable">{libro}</span>
+                  <strong>{libro}</strong>
                 </p>
                 <p style={{ margin: 0 }}>
                   Hoja:{" "}
-                  <span contentEditable suppressContentEditableWarning className="editable">{hoja}</span>
+                  <strong>{hoja}</strong>
                   {"    "}Folio:{" "}
-                  <span contentEditable suppressContentEditableWarning className="editable">{folio}</span>
+                  <strong>{folio}</strong>
                 </p>
                 <p style={{ margin: 0 }}>
                   Fecha:{" "}
-                  <span contentEditable suppressContentEditableWarning className="editable">{fecha}</span>
+                  <strong>{fecha}</strong>
                 </p>
               </div>
 
