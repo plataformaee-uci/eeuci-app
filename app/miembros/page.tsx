@@ -70,6 +70,24 @@ export default async function MiembrosPage({
               Estas son las especialidades disponibles. Elige una para ver sus
               clases.
             </p>
+            <Link
+              href="/miembros/buscar"
+              className="inline-flex items-center gap-2 mt-4 rounded-lg bg-white/10 border border-white/20 px-4 py-2.5 text-sm font-semibold text-white hover:bg-white/15 transition"
+            >
+              <svg
+                className="w-4 h-4"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <circle cx="11" cy="11" r="8" />
+                <path d="M21 21l-4.3-4.3" />
+              </svg>
+              Buscar clases
+            </Link>
 
             <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {especialidades.map((esp) => (
@@ -101,9 +119,17 @@ export default async function MiembrosPage({
           <Paywall conError={error === "checkout"} />
         )}
 
-        <p className="text-xs text-white/45 mt-12">
-          Sesión iniciada como {user.email}
-        </p>
+        <div className="mt-12 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-white/45">
+          <span>Sesión iniciada como {user.email}</span>
+          {suscrito && (
+            <a
+              href="/api/portal"
+              className="font-semibold text-[#FFC629] hover:underline"
+            >
+              Gestionar mi suscripción
+            </a>
+          )}
+        </div>
       </main>
     </div>
   );

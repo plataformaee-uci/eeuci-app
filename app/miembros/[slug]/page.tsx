@@ -5,7 +5,10 @@ import { getEspecialidad } from "../../_data/catalogo";
 import { constanciasDeEspecialidad } from "../../_data/constancias";
 import { FondoMedico } from "../../_components/FondoMedico";
 import { Logo } from "../../_components/Logo";
+import { BotonVista } from "../../_components/BotonVista";
 import { tieneSuscripcionActiva } from "@/lib/stripe";
+
+export const dynamic = "force-dynamic";
 
 // IDs de video en Google Drive, en el MISMO orden que las clases del catálogo.
 const driveIds: Record<string, string[]> = {
@@ -91,6 +94,18 @@ export default async function EspecialidadPage({
   const enReproductor =
     !Number.isNaN(indice) && !!especialidad.clases[indice];
 
+  // Clases que el usuario ya marcó como vistas (progreso).
+  let vistas = new Set<number>();
+  try {
+    const { data: vistasData } = await supabase
+      .from("clases_vistas")
+      .select("indice")
+      .eq("especialidad", slug);
+    vistas = new Set((vistasData ?? []).map((v) => v.indice as number));
+  } catch (error) {
+    console.error("Progreso no disponible:", error);
+  }
+
   return (
     <div className="min-h-screen text-white">
       <FondoMedico />
@@ -116,9 +131,10 @@ export default async function EspecialidadPage({
             especialidad={especialidad}
             ids={ids}
             indice={indice}
+            vista={vistas.has(indice)}
           />
         ) : (
-          <ListaClases especialidad={especialidad} ids={ids} />
+          <ListaClases especialidad={especialidad} ids={ids} vistas={vistas} />
         )}
       </main>
     </div>
@@ -128,9 +144,11 @@ export default async function EspecialidadPage({
 function ListaClases({
   especialidad,
   ids,
+  vistas,
 }: {
   especialidad: NonNullable<ReturnType<typeof getEspecialidad>>;
   ids: string[];
+  vistas: Set<number>;
 }) {
   return (
     <>
@@ -160,6 +178,24 @@ function ListaClases({
               <span className="flex-1 font-medium text-slate-800">
                 {clase.titulo}
               </span>
+              {vistas.has(i) && (
+                <span
+                  className="shrink-0 inline-flex items-center text-emerald-600"
+                  title="Clase vista"
+                >
+                  <svg
+                    className="w-5 h-5"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M20 6L9 17l-5-5" />
+                  </svg>
+                </span>
+              )}
               {tieneVideo ? (
                 <span className="shrink-0 inline-flex items-center gap-1.5 text-sm font-semibold text-[#C8172E]">
                   <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
@@ -226,10 +262,12 @@ function Reproductor({
   especialidad,
   ids,
   indice,
+  vista,
 }: {
   especialidad: NonNullable<ReturnType<typeof getEspecialidad>>;
   ids: string[];
   indice: number;
+  vista: boolean;
 }) {
   const claseActual = especialidad.clases[indice];
   const driveId = ids[indice];
@@ -269,6 +307,14 @@ function Reproductor({
             Esta clase está en preparación.
           </div>
         )}
+      </div>
+
+      <div className="mt-4">
+        <BotonVista
+          especialidad={especialidad.slug}
+          indice={indice}
+          inicial={vista}
+        />
       </div>
 
       <div className="mt-6 flex items-center justify-between gap-3">
