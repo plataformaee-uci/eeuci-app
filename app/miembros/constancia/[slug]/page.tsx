@@ -97,11 +97,18 @@ export default async function ConstanciaPage({
         </div>
       </div>
 
-      <p className="no-print text-center text-xs text-slate-500 pt-4 px-4">
-        Haz clic en los campos{" "}
-        <span style={{ borderBottom: "1px dashed #94a3b8" }}>subrayados</span>{" "}
-        (fecha, libro, hoja, folio) para editarlos antes de imprimir.
-      </p>
+      <div className="no-print text-center text-xs text-slate-500 pt-4 px-4 space-y-1">
+        <p>
+          Haz clic en los campos{" "}
+          <span style={{ borderBottom: "1px dashed #94a3b8" }}>subrayados</span>{" "}
+          (fecha, libro, hoja, folio) para editarlos antes de imprimir.
+        </p>
+        <p>
+          Al imprimir/guardar PDF: elige orientación{" "}
+          <strong>Horizontal</strong> y, en “Más opciones”, desactiva{" "}
+          <strong>“Encabezados y pies de página”</strong> para un PDF limpio.
+        </p>
+      </div>
 
       <div className="py-8 px-4 flex flex-col items-center gap-8">
         {/* ===== FRENTE ===== */}
@@ -112,7 +119,7 @@ export default async function ConstanciaPage({
           <div
             style={{
               border: "1px solid #16406F",
-              padding: "26px 40px",
+              padding: "12px 40px 14px",
               position: "relative",
               overflow: "hidden",
             }}
@@ -140,7 +147,7 @@ export default async function ConstanciaPage({
               <img
                 src="/constancia/eeuci.png"
                 alt="EE-UCI"
-                style={{ height: "92px", display: "block", margin: "0 auto" }}
+                style={{ height: "70px", display: "block", margin: "0 auto" }}
               />
 
               {/* Título */}
@@ -149,9 +156,9 @@ export default async function ConstanciaPage({
                   textAlign: "center",
                   color: "#2E52A5",
                   fontWeight: "bold",
-                  fontSize: "25px",
-                  lineHeight: 1.2,
-                  margin: "10px 0 0",
+                  fontSize: "21px",
+                  lineHeight: 1.15,
+                  margin: "5px 0 0",
                 }}
               >
                 ENTRENAMIENTO DE ENFERMERIA EN UCI
@@ -165,7 +172,7 @@ export default async function ConstanciaPage({
                   color: "#64748b",
                   fontSize: "15px",
                   letterSpacing: "0.08em",
-                  margin: "14px 0 0",
+                  margin: "8px 0 0",
                 }}
               >
                 OTORGA LA PRESENTE CONSTANCIA A:
@@ -176,9 +183,9 @@ export default async function ConstanciaPage({
                 style={{
                   textAlign: "center",
                   color: "#0f172a",
-                  fontSize: "32px",
+                  fontSize: "26px",
                   fontWeight: "bold",
-                  margin: "12px 0",
+                  margin: "6px 0",
                 }}
               >
                 {nombre}
@@ -217,12 +224,12 @@ export default async function ConstanciaPage({
               </p>
 
               {/* Firma central — Carlos Mejía */}
-              <div style={{ textAlign: "center", marginTop: "16px" }}>
+              <div style={{ textAlign: "center", marginTop: "8px" }}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src="/constancia/firma-carlos.png"
                   alt="Firma"
-                  style={{ height: "52px", display: "block", margin: "0 auto -4px" }}
+                  style={{ height: "44px", display: "block", margin: "0 auto -4px" }}
                 />
                 <p
                   style={{
@@ -254,7 +261,7 @@ export default async function ConstanciaPage({
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "flex-end",
-                  marginTop: "14px",
+                  marginTop: "6px",
                 }}
               >
                 {/* Izquierda — CEFCE / Dr. Juvencio */}
@@ -263,7 +270,7 @@ export default async function ConstanciaPage({
                   <img
                     src="/constancia/cefce.png"
                     alt=""
-                    style={{ height: "58px", display: "block", margin: "0 auto 4px" }}
+                    style={{ height: "48px", display: "block", margin: "0 auto 4px" }}
                   />
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
@@ -285,7 +292,7 @@ export default async function ConstanciaPage({
                   <img
                     src="/constancia/health-professionals.png"
                     alt=""
-                    style={{ height: "66px", display: "block", margin: "0 auto" }}
+                    style={{ height: "52px", display: "block", margin: "0 auto" }}
                   />
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
@@ -306,9 +313,9 @@ export default async function ConstanciaPage({
               <p
                 style={{
                   textAlign: "center",
-                  fontSize: "14px",
+                  fontSize: "13px",
                   color: "#0f172a",
-                  marginTop: "10px",
+                  marginTop: "4px",
                 }}
               >
                 Ciudad de México{" "}
