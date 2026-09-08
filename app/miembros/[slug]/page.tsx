@@ -10,55 +10,6 @@ import { tieneSuscripcionActiva } from "@/lib/stripe";
 
 export const dynamic = "force-dynamic";
 
-// IDs de video en Google Drive, en el MISMO orden que las clases del catálogo.
-const driveIds: Record<string, string[]> = {
-  cardiologia: [
-    "11KuHFyNlsC6kmyEm2m5ZIDSxcOG-HSJZ",
-    "1wgSCJk_cHN4fnEMxT6SP1mzVO224N9yw",
-  ],
-  neumologia: [
-    "16cqZJ5QvjN3Oe5WE_rr5X2UxX6BjAoWD",
-    "1qObDRKD6LMdbIT93BNt1MeZqMmCEAf1n",
-    "18vczek23b6w8oFg_LmWlo-PoTTlX9sHJ",
-    "1AMpQ4-WRwRwtLLvxxYmkLECd_ugm0aUe",
-  ],
-  neurologia: [
-    "1i5I2NlU3_CdMxZPfvbcdIId8xJwnnMmN",
-    "1qN1nXqJZDEkud6Xi9uzG6s1y80exQtV9",
-    "1skmgpij7bgZ8rwxa_wMugvqA6YCE2URZ",
-    "1qnBya7Tm0uPlYwx-iDeCOM4s9V0by-5-",
-    "1bywltOFYxTGhNKv0KtdzeglrZL0qi-Z0",
-  ],
-  nefrologia: [
-    "1h6y1NJQpgDv7wbfJXwtv-6IBw5YRIW54",
-    "1JDvWhoWrk_DNgN96edbu38SNfG4WY_KM",
-  ],
-  quemados: [
-    "1gq9UYBh0rthQ2fLty5SaUG8qK5HX-9sr",
-    "1AHixm_3gGK0qYAIYGPHi3EIToJRgyjnW",
-    "1lnKgOmkNcTKxP4qpIwFVbqdZMuUj3AHZ",
-    "1ZfbbjPYtOsTfe4D0HtTdUtgrVs6Ch-VR",
-    "1Jm1Ha0Ro5Hh-MpW897FboBURIj5VFP3B",
-    "1wFSJm2t-ChS26BOZ_cIfIPlfbP_l2fJ1",
-    "1Oob5pTfBsrdFU5scqSiRZpmDOrPC-ldz",
-  ],
-  miscelaneos: [
-    "1_JTspmkWxhTMYm-Oz1IJIntf8m3Vtpo9",
-    "1A4dcxhPki1F2OgC78-aiJh-Hwq-LMrmr",
-    "1k_10mQ1HtR642CRgxCtEDkoCOtz5Qx2_",
-    "1rosq_cYLeQ0v7kPWItjpBr2MSfIrPl2w",
-    "17SPKtyKm9kbKYcI8XrzhNSpKO9EBY029",
-  ],
-  talleres: [
-    "1Q3uPF4zJAprwf9Sce1lNfjCDSZOFDXIc",
-    "1gA-wIV9jkyMTnhrAhNznjFGIFuGnIyjp",
-    "1RXMjtDBPUJ6nw6lLzm83A5b0ZW95Ji57",
-    "1BA_MP09otc3FqqJmUF31aAlxyyuRPtkw",
-    "1AIp_7MiNlsI2xfkmjXQIEIoWD2udMYy4",
-    "1w-UUMmUyX2I86eOSaSU4v_W_m2vAkfji",
-  ],
-};
-
 export default async function EspecialidadPage({
   params,
   searchParams,
@@ -89,7 +40,7 @@ export default async function EspecialidadPage({
     notFound();
   }
 
-  const ids = driveIds[slug] ?? [];
+  const ids = especialidad.clases.map((c) => c.driveId ?? "");
   const indice = clase !== undefined ? Number.parseInt(clase, 10) : NaN;
   const enReproductor =
     !Number.isNaN(indice) && !!especialidad.clases[indice];

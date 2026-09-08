@@ -14,13 +14,13 @@ export const constancias: Constancia[] = [
   {
     id: "cardiologia-1",
     especialidad: "cardiologia",
-    titulo: "Electrocardiografía: de la célula al monitor",
+    titulo: "Electrocardiograma de la célula al monitor",
     horas: 2,
   },
   {
     id: "cardiologia-2",
     especialidad: "cardiologia",
-    titulo: "Vasopresores",
+    titulo: "Uso de vasopresores en la UCI",
     horas: 2,
   },
 
@@ -40,7 +40,7 @@ export const constancias: Constancia[] = [
   {
     id: "neumologia-3",
     especialidad: "neumologia",
-    titulo: "Sello de agua",
+    titulo: "Uso del sello de agua",
     horas: 2,
   },
   {
@@ -66,19 +66,25 @@ export const constancias: Constancia[] = [
   {
     id: "neurologia-3",
     especialidad: "neurologia",
-    titulo: "Patologías del SNC (Parte 1)",
+    titulo: "Patologías del sistema nervioso central (Parte 1)",
     horas: 2,
   },
   {
     id: "neurologia-4",
     especialidad: "neurologia",
-    titulo: "Patologías del SNC (Parte 2)",
+    titulo: "Patologías del sistema nervioso central (Parte 2)",
     horas: 2,
   },
   {
     id: "neurologia-5",
     especialidad: "neurologia",
-    titulo: "Traumatismo craneoencefálico (TCE)",
+    titulo: "Traumatismo craneoencefálico",
+    horas: 2,
+  },
+  {
+    id: "neurologia-6",
+    especialidad: "neurologia",
+    titulo: "Paciente neurocrítico",
     horas: 2,
   },
 
@@ -86,13 +92,13 @@ export const constancias: Constancia[] = [
   {
     id: "nefrologia-1",
     especialidad: "nefrologia",
-    titulo: "Regulación ácido-base (Parte 1)",
+    titulo: "Regulación ácido-base",
     horas: 2,
   },
   {
     id: "nefrologia-2",
     especialidad: "nefrologia",
-    titulo: "Equilibrio ácido-base (Parte 2)",
+    titulo: "Equilibrio ácido-base",
     horas: 2,
   },
 
@@ -100,43 +106,43 @@ export const constancias: Constancia[] = [
   {
     id: "quemados-1",
     especialidad: "quemados",
-    titulo: "Atención en las primeras 24 horas",
+    titulo: "Atención inicial del paciente quemado",
     horas: 2,
   },
   {
     id: "quemados-2",
     especialidad: "quemados",
-    titulo: "Hemodinamia del quemado (Parte 1)",
+    titulo: "Monitoreo hemodinámico en el paciente quemado (Parte 1)",
     horas: 2,
   },
   {
     id: "quemados-3",
     especialidad: "quemados",
-    titulo: "Hemodinamia del quemado (Parte 2)",
+    titulo: "Monitoreo hemodinámico en el paciente quemado (Parte 2)",
     horas: 2,
   },
   {
     id: "quemados-4",
     especialidad: "quemados",
-    titulo: "Shock en el quemado",
+    titulo: "Shock en el paciente quemado",
     horas: 2,
   },
   {
     id: "quemados-5",
     especialidad: "quemados",
-    titulo: "Uso de albúmina",
+    titulo: "Uso de albúmina en el paciente quemado",
     horas: 2,
   },
   {
     id: "quemados-6",
     especialidad: "quemados",
-    titulo: "Criterios de referencia",
+    titulo: "Criterios de referencia para el paciente quemado",
     horas: 2,
   },
   {
     id: "quemados-7",
     especialidad: "quemados",
-    titulo: "Quemado pediátrico",
+    titulo: "Paciente quemado pediátrico",
     horas: 2,
   },
 
@@ -144,7 +150,7 @@ export const constancias: Constancia[] = [
   {
     id: "miscelaneos-1",
     especialidad: "miscelaneos",
-    titulo: "Accesos vasculares",
+    titulo: "Accesos vasculares en la UCI",
     horas: 2,
   },
   {
@@ -156,7 +162,7 @@ export const constancias: Constancia[] = [
   {
     id: "miscelaneos-3",
     especialidad: "miscelaneos",
-    titulo: "Electrolitos",
+    titulo: "Manejo seguro de electrolitos",
     horas: 2,
   },
   {
@@ -171,18 +177,24 @@ export const constancias: Constancia[] = [
     titulo: "Generalidades del trauma",
     horas: 2,
   },
+  {
+    id: "miscelaneos-6",
+    especialidad: "miscelaneos",
+    titulo: "Síndrome de respuesta inflamatoria en el paciente crítico",
+    horas: 2,
+  },
 
   // ---- Talleres (4 h — las 2 partes juntas = 1 constancia) ----
   {
     id: "taller-linea-arterial",
     especialidad: "talleres",
-    titulo: "Línea arterial",
+    titulo: "Uso y manejo de la línea arterial",
     horas: 4,
   },
   {
     id: "taller-pals",
     especialidad: "talleres",
-    titulo: "Soporte Cardiovascular Avanzado Pediátrico (PALS)",
+    titulo: "Soporte Cardiovascular Avanzado Pediátrico",
     horas: 4,
   },
   {

@@ -21,10 +21,13 @@ export const especialidades: Especialidad[] = [
       "Electrofisiología, monitorización y soporte hemodinámico del paciente crítico.",
     clases: [
       {
-        titulo: "Electrocardiografía: de la célula al monitor",
+        titulo: "Electrocardiograma de la célula al monitor",
         driveId: "11KuHFyNlsC6kmyEm2m5ZIDSxcOG-HSJZ",
       },
-      { titulo: "Vasopresores", driveId: "1wgSCJk_cHN4fnEMxT6SP1mzVO224N9yw" },
+      {
+        titulo: "Uso de vasopresores en la UCI",
+        driveId: "1wgSCJk_cHN4fnEMxT6SP1mzVO224N9yw",
+      },
     ],
   },
   {
@@ -41,7 +44,10 @@ export const especialidades: Especialidad[] = [
         titulo: "Manejo de traqueostomía",
         driveId: "1qObDRKD6LMdbIT93BNt1MeZqMmCEAf1n",
       },
-      { titulo: "Sello de agua", driveId: "18vczek23b6w8oFg_LmWlo-PoTTlX9sHJ" },
+      {
+        titulo: "Uso del sello de agua",
+        driveId: "18vczek23b6w8oFg_LmWlo-PoTTlX9sHJ",
+      },
       {
         titulo: "Caso clínico: SDRA",
         driveId: "1AMpQ4-WRwRwtLLvxxYmkLECd_ugm0aUe",
@@ -63,15 +69,15 @@ export const especialidades: Especialidad[] = [
         driveId: "1qN1nXqJZDEkud6Xi9uzG6s1y80exQtV9",
       },
       {
-        titulo: "Patologías del SNC (Parte 1)",
+        titulo: "Patologías del sistema nervioso central (Parte 1)",
         driveId: "1skmgpij7bgZ8rwxa_wMugvqA6YCE2URZ",
       },
       {
-        titulo: "Patologías del SNC (Parte 2)",
+        titulo: "Patologías del sistema nervioso central (Parte 2)",
         driveId: "1qnBya7Tm0uPlYwx-iDeCOM4s9V0by-5-",
       },
       {
-        titulo: "Traumatismo craneoencefálico (TCE)",
+        titulo: "Traumatismo craneoencefálico",
         driveId: "1bywltOFYxTGhNKv0KtdzeglrZL0qi-Z0",
       },
       {
@@ -87,11 +93,11 @@ export const especialidades: Especialidad[] = [
       "Equilibrio ácido-base y manejo renal del paciente en estado crítico.",
     clases: [
       {
-        titulo: "Regulación ácido-base (Parte 1)",
+        titulo: "Regulación ácido-base",
         driveId: "1h6y1NJQpgDv7wbfJXwtv-6IBw5YRIW54",
       },
       {
-        titulo: "Equilibrio ácido-base (Parte 2)",
+        titulo: "Equilibrio ácido-base",
         driveId: "1JDvWhoWrk_DNgN96edbu38SNfG4WY_KM",
       },
     ],
@@ -103,31 +109,31 @@ export const especialidades: Especialidad[] = [
       "Atención integral del paciente quemado: reanimación, hemodinamia y referencia.",
     clases: [
       {
-        titulo: "Atención en las primeras 24 horas",
+        titulo: "Atención inicial del paciente quemado",
         driveId: "1gq9UYBh0rthQ2fLty5SaUG8qK5HX-9sr",
       },
       {
-        titulo: "Hemodinamia del quemado (Parte 1)",
+        titulo: "Monitoreo hemodinámico en el paciente quemado (Parte 1)",
         driveId: "1AHixm_3gGK0qYAIYGPHi3EIToJRgyjnW",
       },
       {
-        titulo: "Hemodinamia del quemado (Parte 2)",
+        titulo: "Monitoreo hemodinámico en el paciente quemado (Parte 2)",
         driveId: "1lnKgOmkNcTKxP4qpIwFVbqdZMuUj3AHZ",
       },
       {
-        titulo: "Shock en el quemado",
+        titulo: "Shock en el paciente quemado",
         driveId: "1ZfbbjPYtOsTfe4D0HtTdUtgrVs6Ch-VR",
       },
       {
-        titulo: "Uso de albúmina",
+        titulo: "Uso de albúmina en el paciente quemado",
         driveId: "1Jm1Ha0Ro5Hh-MpW897FboBURIj5VFP3B",
       },
       {
-        titulo: "Criterios de referencia",
+        titulo: "Criterios de referencia para el paciente quemado",
         driveId: "1wFSJm2t-ChS26BOZ_cIfIPlfbP_l2fJ1",
       },
       {
-        titulo: "Quemado pediátrico",
+        titulo: "Paciente quemado pediátrico",
         driveId: "1Oob5pTfBsrdFU5scqSiRZpmDOrPC-ldz",
       },
     ],
@@ -139,14 +145,17 @@ export const especialidades: Especialidad[] = [
       "Fundamentos transversales del cuidado crítico: accesos, trauma y valoración.",
     clases: [
       {
-        titulo: "Accesos vasculares",
+        titulo: "Accesos vasculares en la UCI",
         driveId: "1_JTspmkWxhTMYm-Oz1IJIntf8m3Vtpo9",
       },
       {
         titulo: "Primeros auxilios",
         driveId: "1A4dcxhPki1F2OgC78-aiJh-Hwq-LMrmr",
       },
-      { titulo: "Electrolitos", driveId: "1k_10mQ1HtR642CRgxCtEDkoCOtz5Qx2_" },
+      {
+        titulo: "Manejo seguro de electrolitos",
+        driveId: "1k_10mQ1HtR642CRgxCtEDkoCOtz5Qx2_",
+      },
       {
         titulo: "Valoración primaria y secundaria",
         driveId: "1rosq_cYLeQ0v7kPWItjpBr2MSfIrPl2w",
@@ -154,6 +163,10 @@ export const especialidades: Especialidad[] = [
       {
         titulo: "Generalidades del trauma",
         driveId: "17SPKtyKm9kbKYcI8XrzhNSpKO9EBY029",
+      },
+      {
+        titulo: "Síndrome de respuesta inflamatoria en el paciente crítico",
+        driveId: "1XQErgR0dhuccxs-nTrw_wBzCDghTEp9G",
       },
     ],
   },
@@ -164,15 +177,21 @@ export const especialidades: Especialidad[] = [
       "Prácticas guiadas paso a paso sobre procedimientos clave en la UCI.",
     clases: [
       {
-        titulo: "Línea arterial (Parte 1)",
+        titulo: "Uso y manejo de la línea arterial (Parte 1)",
         driveId: "1Q3uPF4zJAprwf9Sce1lNfjCDSZOFDXIc",
       },
       {
-        titulo: "Línea arterial (Parte 2)",
+        titulo: "Uso y manejo de la línea arterial (Parte 2)",
         driveId: "1gA-wIV9jkyMTnhrAhNznjFGIFuGnIyjp",
       },
-      { titulo: "PALS (Parte 1)", driveId: "1RXMjtDBPUJ6nw6lLzm83A5b0ZW95Ji57" },
-      { titulo: "PALS (Parte 2)", driveId: "1BA_MP09otc3FqqJmUF31aAlxyyuRPtkw" },
+      {
+        titulo: "Soporte Cardiovascular Avanzado Pediátrico (Parte 1)",
+        driveId: "1RXMjtDBPUJ6nw6lLzm83A5b0ZW95Ji57",
+      },
+      {
+        titulo: "Soporte Cardiovascular Avanzado Pediátrico (Parte 2)",
+        driveId: "1BA_MP09otc3FqqJmUF31aAlxyyuRPtkw",
+      },
       {
         titulo: "Taxonomía de la ventilación mecánica (Parte 1)",
         driveId: "1AIp_7MiNlsI2xfkmjXQIEIoWD2udMYy4",
