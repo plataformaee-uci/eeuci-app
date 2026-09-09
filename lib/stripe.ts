@@ -6,11 +6,23 @@ export const stripe = new Stripe(
   process.env.STRIPE_SECRET_KEY || "sk_test_placeholder",
 );
 
+// Cuentas de demostración: acceso completo a clases y constancias SIN pagar
+// (para mostrar/explorar la plataforma). Configurable con la variable DEMO_EMAILS.
+const DEMO_EMAILS = (process.env.DEMO_EMAILS ?? "demo@ee-uci.online")
+  .split(",")
+  .map((e) => e.trim().toLowerCase())
+  .filter(Boolean);
+
+export function esDemo(email?: string | null): boolean {
+  return !!email && DEMO_EMAILS.includes(email.toLowerCase());
+}
+
 // Verifica en vivo con Stripe si el usuario (por correo) tiene una
 // suscripción activa. Devuelve false si no hay clave o si algo falla.
 export async function tieneSuscripcionActiva(
   email?: string | null,
 ): Promise<boolean> {
+  if (esDemo(email)) return true; // demo: acceso sin pagar
   if (!email || !process.env.STRIPE_SECRET_KEY) return false;
   try {
     const customers = await stripe.customers.list({ email, limit: 20 });
@@ -40,6 +52,7 @@ export async function haCompradoConstancia(
   email: string | null | undefined,
   constanciaId: string,
 ): Promise<boolean> {
+  if (esDemo(email)) return true; // demo: ve las constancias sin pagar
   if (!email || !process.env.STRIPE_SECRET_KEY) return false;
   try {
     const customers = await stripe.customers.list({ email, limit: 20 });
