@@ -47,12 +47,20 @@ export default async function AdminPage() {
       <header className="border-b border-white/10 bg-[#180407]/60 backdrop-blur-md">
         <div className="max-w-4xl mx-auto px-6 h-16 flex items-center justify-between">
           <Logo href="/miembros" />
-          <Link
-            href="/miembros"
-            className="text-sm font-semibold text-white/70 hover:text-white transition"
-          >
-            ← Área de miembros
-          </Link>
+          <div className="flex items-center gap-5">
+            <Link
+              href="/miembros/admin/guia"
+              className="text-sm font-semibold text-[#FFC629] hover:brightness-110 transition"
+            >
+              Guía de administración
+            </Link>
+            <Link
+              href="/miembros"
+              className="text-sm font-semibold text-white/70 hover:text-white transition"
+            >
+              ← Área de miembros
+            </Link>
+          </div>
         </div>
       </header>
 
@@ -68,6 +76,12 @@ export default async function AdminPage() {
           <strong className="text-white">{pendientes}</strong> pendientes de{" "}
           {registros.length}.
         </p>
+        <Link
+          href="/miembros/admin/guia"
+          className="inline-flex items-center gap-2 mt-4 rounded-lg border border-[#FFC629]/40 bg-[#FFC629]/10 text-[#FFC629] font-semibold px-4 py-2 text-sm hover:bg-[#FFC629]/20 transition"
+        >
+          Leer la guía de administración →
+        </Link>
 
         <div className="mt-8 space-y-4">
           {registros.length === 0 && (
