@@ -1,52 +1,78 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import type { EmailOtpType } from "@supabase/supabase-js";
 import { createClient } from "@/lib/supabase/client";
 import { traducirError } from "@/lib/auth-errors";
 import { FondoMedico } from "../_components/FondoMedico";
 
-export default function ActualizarContrasenaPage() {
+function ActualizarContrasena() {
   const router = useRouter();
+  const params = useSearchParams();
+  const tokenHash = params.get("token_hash");
+  const tipo = (params.get("type") as EmailOtpType | null) ?? "recovery";
+
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [exito, setExito] = useState(false);
-  // "verificando" mientras el navegador procesa el token del enlace,
-  // "listo" si hay sesión de recuperación, "invalido" si el enlace expiró.
-  const [estado, setEstado] = useState<"verificando" | "listo" | "invalido">(
-    "verificando",
-  );
+  // "verificando" al cargar, "confirmar" muestra el botón (evita que los
+  // escáneres de correo gasten el enlace), "listo" formulario, "invalido" vencido.
+  const [estado, setEstado] = useState<
+    "verificando" | "confirmar" | "listo" | "invalido"
+  >("verificando");
 
   useEffect(() => {
     const supabase = createClient();
     let resuelto = false;
 
-    const marcarListo = (sesion: unknown) => {
+    // Caso 1: ya hay sesión de recuperación (flujo antiguo con # en la URL).
+    supabase.auth.getSession().then(({ data }) => {
+      if (data.session && !resuelto) {
+        resuelto = true;
+        setEstado("listo");
+      }
+    });
+    const { data: sub } = supabase.auth.onAuthStateChange((_e, sesion) => {
       if (sesion && !resuelto) {
         resuelto = true;
         setEstado("listo");
       }
-    };
+    });
 
-    // El cliente del navegador lee el token del enlace (en el # de la URL)
-    // y crea una sesión temporal para poder cambiar la contraseña.
-    supabase.auth.getSession().then(({ data }) => marcarListo(data.session));
-    const { data: sub } = supabase.auth.onAuthStateChange((_e, sesion) =>
-      marcarListo(sesion),
-    );
-
-    // Si en unos segundos no hay sesión, el enlace es inválido o expiró.
+    // Caso 2: viene un token en la URL → mostramos botón para confirmar.
     const t = setTimeout(() => {
-      if (!resuelto) setEstado("invalido");
-    }, 3500);
+      if (resuelto) return;
+      setEstado(tokenHash ? "confirmar" : "invalido");
+    }, 1200);
 
     return () => {
       clearTimeout(t);
       sub.subscription.unsubscribe();
     };
-  }, []);
+  }, [tokenHash]);
+
+  // Se llama SOLO cuando la persona hace clic (los escáneres no hacen clic).
+  async function confirmarEnlace() {
+    if (!tokenHash) return;
+    setLoading(true);
+    setError(null);
+    const supabase = createClient();
+    const { error } = await supabase.auth.verifyOtp({
+      token_hash: tokenHash,
+      type: tipo,
+    });
+    if (error) {
+      setError(traducirError(error.message));
+      setEstado("invalido");
+      setLoading(false);
+      return;
+    }
+    setEstado("listo");
+    setLoading(false);
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -61,7 +87,6 @@ export default function ActualizarContrasenaPage() {
     }
     setExito(true);
     setLoading(false);
-    // Ya con la contraseña nueva y sesión activa, pasa a las clases.
     setTimeout(() => {
       router.push("/miembros");
       router.refresh();
@@ -90,11 +115,34 @@ export default function ActualizarContrasenaPage() {
           {estado === "verificando" && (
             <div className="text-center py-4">
               <h1 className="font-[family-name:var(--font-serif)] text-xl font-bold text-slate-900">
-                Verificando enlace…
+                Un momento…
               </h1>
               <p className="text-sm text-slate-500 mt-2">
-                Un momento, estamos validando tu enlace de recuperación.
+                Preparando tu restablecimiento de contraseña.
               </p>
+            </div>
+          )}
+
+          {estado === "confirmar" && (
+            <div className="text-center py-2">
+              <h1 className="font-[family-name:var(--font-serif)] text-2xl font-bold text-slate-900 mb-1">
+                Restablecer contraseña
+              </h1>
+              <p className="text-sm text-slate-500 mb-5">
+                Haz clic para continuar y crear tu nueva contraseña.
+              </p>
+              {error && (
+                <p className="text-sm text-[#C8172E] bg-red-50 border border-red-100 rounded-lg px-3 py-2 mb-4">
+                  {error}
+                </p>
+              )}
+              <button
+                onClick={confirmarEnlace}
+                disabled={loading}
+                className="w-full rounded-lg bg-[#FFC629] text-[#2a0a0e] font-bold py-2.5 hover:brightness-105 disabled:opacity-60 transition"
+              >
+                {loading ? "Verificando…" : "Continuar"}
+              </button>
             </div>
           )}
 
@@ -163,13 +211,19 @@ export default function ActualizarContrasenaPage() {
               <h1 className="font-[family-name:var(--font-serif)] text-xl font-bold text-slate-900">
                 ¡Contraseña actualizada!
               </h1>
-              <p className="text-sm text-slate-500 mt-2">
-                Entrando a tus clases…
-              </p>
+              <p className="text-sm text-slate-500 mt-2">Entrando a tus clases…</p>
             </div>
           )}
         </div>
       </div>
     </main>
+  );
+}
+
+export default function ActualizarContrasenaPage() {
+  return (
+    <Suspense fallback={<main className="min-h-screen" />}>
+      <ActualizarContrasena />
+    </Suspense>
   );
 }
