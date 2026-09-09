@@ -12,7 +12,8 @@ export function createAdminClient() {
 
 // Correos con acceso de administrador (separados por coma en la variable).
 const ADMIN_EMAILS = (
-  process.env.ADMIN_EMAILS ?? "carlos.lira@enpodi.online"
+  process.env.ADMIN_EMAILS ??
+  "carlos.lira@enpodi.online,carlosmejiamenduett@gmail.com"
 )
   .split(",")
   .map((e) => e.trim().toLowerCase())
