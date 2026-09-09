@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { stripe, esDemo } from "@/lib/stripe";
+import { esAdmin } from "@/lib/supabase/admin";
 
 // Crea una sesión de pago de Stripe y redirige a la pasarela.
 // Se puede llamar por POST (botón del muro) o GET (redirección tras registro).
@@ -16,8 +17,8 @@ async function crearCheckout(request: Request) {
     });
   }
 
-  // Cuenta de demostración: no paga, va directo al área de miembros.
-  if (esDemo(user.email)) {
+  // Cuenta de demostración o admin/dueño: no paga, va directo al área de miembros.
+  if (esDemo(user.email) || esAdmin(user.email)) {
     return NextResponse.redirect(new URL("/miembros", request.url), {
       status: 303,
     });

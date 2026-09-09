@@ -1,4 +1,5 @@
 import Stripe from "stripe";
+import { esAdmin } from "@/lib/supabase/admin";
 
 // El fallback evita que el build truene si la variable aún no está puesta;
 // en producción se usa la clave real de la variable de entorno.
@@ -23,6 +24,7 @@ export async function tieneSuscripcionActiva(
   email?: string | null,
 ): Promise<boolean> {
   if (esDemo(email)) return true; // demo: acceso sin pagar
+  if (esAdmin(email)) return true; // admin/dueño: acceso completo sin pagar
   if (!email || !process.env.STRIPE_SECRET_KEY) return false;
   try {
     const customers = await stripe.customers.list({ email, limit: 20 });
@@ -53,6 +55,7 @@ export async function haCompradoConstancia(
   constanciaId: string,
 ): Promise<boolean> {
   if (esDemo(email)) return true; // demo: ve las constancias sin pagar
+  if (esAdmin(email)) return true; // admin/dueño: ve las constancias sin pagar
   if (!email || !process.env.STRIPE_SECRET_KEY) return false;
   try {
     const customers = await stripe.customers.list({ email, limit: 20 });
