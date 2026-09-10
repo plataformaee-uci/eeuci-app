@@ -15,7 +15,7 @@ const beneficios = [
   {
     titulo: "Constancias con valor curricular",
     texto:
-      "Respalda tu formación con constancias que suman a tu desarrollo profesional.",
+      "Solicita tu constancia con valor curricular (con costo adicional) para respaldar tu formación.",
     icono: (
       <>
         <circle cx="12" cy="9" r="5" />
@@ -229,7 +229,6 @@ export default function Home() {
               "Acceso a todas las especialidades",
               "Clases en vivo cada jueves",
               "Biblioteca clínica en crecimiento",
-              "Constancias con valor curricular",
               "Cancela cuando quieras",
             ].map((item) => (
               <li key={item} className="flex items-start gap-3 text-white/85">
