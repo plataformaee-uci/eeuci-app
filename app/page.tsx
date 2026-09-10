@@ -15,7 +15,7 @@ const beneficios = [
   {
     titulo: "Constancias con valor curricular",
     texto:
-      "Solicita tu constancia con valor curricular (con costo adicional) para respaldar tu formación.",
+      "Solicita tu constancia con valor curricular (desde $150) para respaldar tu formación.",
     icono: (
       <>
         <circle cx="12" cy="9" r="5" />

@@ -140,7 +140,7 @@ function Paywall({ conError }: { conError: boolean }) {
     "Acceso a las 7 especialidades",
     `${totalClases}+ clases del paciente crítico`,
     "Clases en vivo cada jueves",
-    "Constancias con valor curricular",
+    "Constancias con valor curricular (desde $150 c/u)",
     "Cancela cuando quieras",
   ];
 
