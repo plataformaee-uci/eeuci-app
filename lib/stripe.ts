@@ -49,6 +49,37 @@ export async function tieneSuscripcionActiva(
   }
 }
 
+// Devuelve el conjunto de correos (en minúscula) con suscripción activa o en
+// prueba. Hace 1-2 llamadas a Stripe en total (no una por alumno), así el
+// panel de admin carga rápido aunque haya muchos registrados.
+export async function correosConSuscripcionActiva(): Promise<Set<string>> {
+  const correos = new Set<string>();
+  if (!process.env.STRIPE_SECRET_KEY) return correos;
+  try {
+    for (const status of ["active", "trialing"] as const) {
+      const subs = await stripe.subscriptions.list({
+        status,
+        limit: 100,
+        expand: ["data.customer"],
+      });
+      for (const s of subs.data) {
+        const cliente = s.customer;
+        if (
+          cliente &&
+          typeof cliente !== "string" &&
+          !("deleted" in cliente && cliente.deleted)
+        ) {
+          const email = (cliente as Stripe.Customer).email;
+          if (email) correos.add(email.toLowerCase());
+        }
+      }
+    }
+  } catch (error) {
+    console.error("Error listando suscripciones activas:", error);
+  }
+  return correos;
+}
+
 // ¿El usuario ya pagó (compró) una constancia específica?
 export async function haCompradoConstancia(
   email: string | null | undefined,

@@ -90,11 +90,19 @@ export default async function GuiaAdminPage() {
           </Seccion>
 
           {/* 2 */}
-          <Seccion n="2" titulo="Ver los alumnos y sus correos">
+          <Seccion n="2" titulo="Ver los alumnos y su actividad">
             <p>
-              Los datos de alumnos viven en{" "}
-              <strong className="text-white">Supabase → Authentication → Users</strong>
-              . Ahí ves el correo de cada persona registrada.
+              Entra a{" "}
+              <Link
+                href="/miembros/admin/alumnos"
+                className="text-[#FFC629] font-semibold hover:underline"
+              >
+                Alumnos
+              </Link>{" "}
+              (enlace arriba, en el panel). Ahí ves a cada persona registrada
+              con su correo, fecha de registro, último acceso, si tiene
+              suscripción activa, cuántas clases ha visto y cuántas constancias
+              ha solicitado.
             </p>
             <p className="mt-2 text-white/60 text-sm">
               Las contraseñas <strong className="text-white">no se pueden ver</strong>{" "}

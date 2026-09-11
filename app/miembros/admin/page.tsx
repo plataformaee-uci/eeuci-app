@@ -49,10 +49,16 @@ export default async function AdminPage() {
           <Logo href="/miembros" />
           <div className="flex items-center gap-5">
             <Link
+              href="/miembros/admin/alumnos"
+              className="text-sm font-semibold text-white/70 hover:text-white transition"
+            >
+              Alumnos
+            </Link>
+            <Link
               href="/miembros/admin/guia"
               className="text-sm font-semibold text-[#FFC629] hover:brightness-110 transition"
             >
-              Guía de administración
+              Guía
             </Link>
             <Link
               href="/miembros"
@@ -76,12 +82,20 @@ export default async function AdminPage() {
           <strong className="text-white">{pendientes}</strong> pendientes de{" "}
           {registros.length}.
         </p>
-        <Link
-          href="/miembros/admin/guia"
-          className="inline-flex items-center gap-2 mt-4 rounded-lg border border-[#FFC629]/40 bg-[#FFC629]/10 text-[#FFC629] font-semibold px-4 py-2 text-sm hover:bg-[#FFC629]/20 transition"
-        >
-          Leer la guía de administración →
-        </Link>
+        <div className="mt-4 flex flex-wrap gap-3">
+          <Link
+            href="/miembros/admin/alumnos"
+            className="inline-flex items-center gap-2 rounded-lg border border-white/20 bg-white/5 text-white font-semibold px-4 py-2 text-sm hover:bg-white/10 transition"
+          >
+            Ver alumnos y actividad →
+          </Link>
+          <Link
+            href="/miembros/admin/guia"
+            className="inline-flex items-center gap-2 rounded-lg border border-[#FFC629]/40 bg-[#FFC629]/10 text-[#FFC629] font-semibold px-4 py-2 text-sm hover:bg-[#FFC629]/20 transition"
+          >
+            Leer la guía de administración →
+          </Link>
+        </div>
 
         <div className="mt-8 space-y-4">
           {registros.length === 0 && (
