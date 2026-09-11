@@ -15,6 +15,7 @@ type Alumno = {
   registrado: string | null;
   ultimoAcceso: string | null;
   suscrito: boolean;
+  admin: boolean;
   clasesVistas: number;
   constancias: number;
 };
@@ -97,14 +98,25 @@ export default async function AlumnosPage() {
         nombre,
         registrado: u.created_at ?? null,
         ultimoAcceso: u.last_sign_in_at ?? null,
-        suscrito: suscritos.has(email) || esAdmin(u.email),
+        suscrito: suscritos.has(email), // solo lo que dice Stripe
+        admin: esAdmin(u.email),
         clasesVistas: vistasPorUsuario.get(u.id) ?? 0,
         constancias: constanciasPorCorreo.get(email) ?? 0,
       };
     })
     .sort((a, b) => (b.registrado ?? "").localeCompare(a.registrado ?? ""));
 
+  // "Con suscripción" cuenta solo pagos reales de Stripe (sin admins).
   const totalSuscritos = alumnos.filter((a) => a.suscrito).length;
+
+  // Suscripciones en Stripe cuyo correo no coincide con ningún registrado
+  // (por ejemplo, si el alumno usó otro correo al pagar).
+  const correosRegistrados = new Set(
+    alumnos.map((a) => a.email.toLowerCase()),
+  );
+  const suscripcionesSinAlumno = [...suscritos].filter(
+    (e) => !correosRegistrados.has(e),
+  );
   const totalConstancias = [...constanciasPorCorreo.values()].reduce(
     (s, n) => s + n,
     0,
@@ -151,13 +163,33 @@ export default async function AlumnosPage() {
         {/* Resumen */}
         <div className="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-4">
           <Tarjeta valor={alumnos.length} etiqueta="Registrados" />
-          <Tarjeta valor={totalSuscritos} etiqueta="Con suscripción" />
+          <Tarjeta valor={totalSuscritos} etiqueta="Suscritos (Stripe)" />
           <Tarjeta valor={totalConstancias} etiqueta="Constancias" />
           <Tarjeta
             valor={[...vistasPorUsuario.values()].reduce((s, n) => s + n, 0)}
             etiqueta="Clases vistas"
           />
         </div>
+
+        {/* Aviso: pagos en Stripe sin alumno coincidente */}
+        {suscripcionesSinAlumno.length > 0 && (
+          <div className="mt-6 rounded-2xl border border-amber-400/30 bg-amber-400/10 p-5">
+            <p className="font-semibold text-amber-200">
+              {suscripcionesSinAlumno.length} suscripción(es) en Stripe sin
+              cuenta registrada
+            </p>
+            <p className="text-sm text-white/70 mt-1">
+              Estos correos pagaron en Stripe pero no coinciden con ninguna
+              cuenta de la plataforma (quizá usaron otro correo al pagar).
+              Conviene contactarlos:
+            </p>
+            <ul className="mt-2 text-sm text-amber-100 list-disc pl-5 space-y-0.5">
+              {suscripcionesSinAlumno.map((e) => (
+                <li key={e}>{e}</li>
+              ))}
+            </ul>
+          </div>
+        )}
 
         {/* Tabla */}
         <div className="mt-8 rounded-2xl border border-white/10 bg-white/5 overflow-x-auto">
@@ -196,7 +228,11 @@ export default async function AlumnosPage() {
                     {fecha(a.ultimoAcceso)}
                   </td>
                   <td className={td}>
-                    {a.suscrito ? (
+                    {a.admin ? (
+                      <span className="text-xs font-bold rounded-full px-3 py-1 bg-[#FFC629]/20 text-[#FFC629]">
+                        Admin
+                      </span>
+                    ) : a.suscrito ? (
                       <span className="text-xs font-bold rounded-full px-3 py-1 bg-emerald-500/20 text-emerald-300">
                         Activa
                       </span>
