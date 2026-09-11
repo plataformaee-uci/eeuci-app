@@ -2,7 +2,10 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient, esAdmin } from "@/lib/supabase/admin";
-import { correosConSuscripcionActiva } from "@/lib/stripe";
+import {
+  correosConSuscripcionActiva,
+  correosQueHanPagado,
+} from "@/lib/stripe";
 import { FondoMedico } from "../../../_components/FondoMedico";
 import { Logo } from "../../../_components/Logo";
 
@@ -15,6 +18,7 @@ type Alumno = {
   registrado: string | null;
   ultimoAcceso: string | null;
   suscrito: boolean;
+  haPagado: boolean;
   admin: boolean;
   clasesVistas: number;
   constancias: number;
@@ -82,8 +86,11 @@ export default async function AlumnosPage() {
     /* sin constancias todavía */
   }
 
-  // 4) Suscripciones activas (Stripe, 1-2 llamadas)
-  const suscritos = await correosConSuscripcionActiva();
+  // 4) Suscripciones activas y quién ha pagado alguna vez (Stripe)
+  const [suscritos, hanPagado] = await Promise.all([
+    correosConSuscripcionActiva(),
+    correosQueHanPagado(),
+  ]);
 
   const alumnos: Alumno[] = usuarios
     .map((u) => {
@@ -98,7 +105,8 @@ export default async function AlumnosPage() {
         nombre,
         registrado: u.created_at ?? null,
         ultimoAcceso: u.last_sign_in_at ?? null,
-        suscrito: suscritos.has(email), // solo lo que dice Stripe
+        suscrito: suscritos.has(email), // suscripción activa (Stripe)
+        haPagado: hanPagado.has(email), // algún pago exitoso (Stripe)
         admin: esAdmin(u.email),
         clasesVistas: vistasPorUsuario.get(u.id) ?? 0,
         constancias: constanciasPorCorreo.get(email) ?? 0,
@@ -106,8 +114,10 @@ export default async function AlumnosPage() {
     })
     .sort((a, b) => (b.registrado ?? "").localeCompare(a.registrado ?? ""));
 
-  // "Con suscripción" cuenta solo pagos reales de Stripe (sin admins).
+  // "Suscritos" = suscripción activa ahora. "Han pagado" = algún pago alguna
+  // vez (incluye suscripciones canceladas y constancias). Ambos sin admins.
   const totalSuscritos = alumnos.filter((a) => a.suscrito).length;
+  const totalHanPagado = alumnos.filter((a) => a.haPagado).length;
 
   // Suscripciones en Stripe cuyo correo no coincide con ningún registrado
   // (por ejemplo, si el alumno usó otro correo al pagar).
@@ -161,9 +171,10 @@ export default async function AlumnosPage() {
         </p>
 
         {/* Resumen */}
-        <div className="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div className="mt-8 grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-4">
           <Tarjeta valor={alumnos.length} etiqueta="Registrados" />
-          <Tarjeta valor={totalSuscritos} etiqueta="Suscritos (Stripe)" />
+          <Tarjeta valor={totalSuscritos} etiqueta="Suscritos (activos)" />
+          <Tarjeta valor={totalHanPagado} etiqueta="Han pagado" />
           <Tarjeta valor={totalConstancias} etiqueta="Constancias" />
           <Tarjeta
             valor={[...vistasPorUsuario.values()].reduce((s, n) => s + n, 0)}
@@ -200,6 +211,7 @@ export default async function AlumnosPage() {
                 <th className={th}>Registro</th>
                 <th className={th}>Último acceso</th>
                 <th className={th}>Suscripción</th>
+                <th className={th}>Ha pagado</th>
                 <th className={th}>Clases vistas</th>
                 <th className={th}>Constancias</th>
               </tr>
@@ -207,7 +219,7 @@ export default async function AlumnosPage() {
             <tbody>
               {alumnos.length === 0 && (
                 <tr>
-                  <td className="px-4 py-6 text-white/60" colSpan={6}>
+                  <td className="px-4 py-6 text-white/60" colSpan={7}>
                     Aún no hay alumnos registrados.
                   </td>
                 </tr>
@@ -240,6 +252,15 @@ export default async function AlumnosPage() {
                       <span className="text-xs font-bold rounded-full px-3 py-1 bg-white/10 text-white/60">
                         Sin plan
                       </span>
+                    )}
+                  </td>
+                  <td className={td}>
+                    {a.haPagado ? (
+                      <span className="text-xs font-bold rounded-full px-3 py-1 bg-emerald-500/20 text-emerald-300">
+                        Sí
+                      </span>
+                    ) : (
+                      <span className="text-white/40">—</span>
                     )}
                   </td>
                   <td className={`${td} text-white/80`}>

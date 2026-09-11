@@ -80,6 +80,43 @@ export async function correosConSuscripcionActiva(): Promise<Set<string>> {
   return correos;
 }
 
+// Devuelve el conjunto de correos (en minúscula) que han hecho AL MENOS un
+// pago exitoso en Stripe (suscripción o constancia), aunque ya no estén
+// suscritos. Recorre los cargos de Stripe (hasta 500) en pocas llamadas.
+export async function correosQueHanPagado(): Promise<Set<string>> {
+  const correos = new Set<string>();
+  if (!process.env.STRIPE_SECRET_KEY) return correos;
+  try {
+    let startingAfter: string | undefined;
+    for (let i = 0; i < 5; i++) {
+      const cargos = await stripe.charges.list({
+        limit: 100,
+        starting_after: startingAfter,
+        expand: ["data.customer"],
+      });
+      for (const c of cargos.data) {
+        if (!(c.paid && c.status === "succeeded" && !c.refunded)) continue;
+        const cliente = c.customer;
+        let email: string | null | undefined;
+        if (
+          cliente &&
+          typeof cliente !== "string" &&
+          !("deleted" in cliente && cliente.deleted)
+        ) {
+          email = (cliente as Stripe.Customer).email;
+        }
+        email = email || c.billing_details?.email || c.receipt_email;
+        if (email) correos.add(email.toLowerCase());
+      }
+      if (!cargos.has_more) break;
+      startingAfter = cargos.data[cargos.data.length - 1]?.id;
+    }
+  } catch (error) {
+    console.error("Error listando cargos de Stripe:", error);
+  }
+  return correos;
+}
+
 // ¿El usuario ya pagó (compró) una constancia específica?
 export async function haCompradoConstancia(
   email: string | null | undefined,
