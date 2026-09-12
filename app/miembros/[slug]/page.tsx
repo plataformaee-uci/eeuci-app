@@ -6,6 +6,7 @@ import { constanciasDeEspecialidad } from "../../_data/constancias";
 import { FondoMedico } from "../../_components/FondoMedico";
 import { Logo } from "../../_components/Logo";
 import { BotonVista } from "../../_components/BotonVista";
+import { VideoDrive } from "../../_components/VideoDrive";
 import { tieneSuscripcionActiva } from "@/lib/stripe";
 
 export const dynamic = "force-dynamic";
@@ -244,21 +245,12 @@ function Reproductor({
         {claseActual.titulo}
       </h1>
 
-      <div className="mt-6 aspect-video w-full overflow-hidden rounded-2xl border border-white/10 bg-black">
-        {driveId ? (
-          <iframe
-            src={`https://drive.google.com/file/d/${driveId}/preview`}
-            allow="autoplay; fullscreen"
-            allowFullScreen
-            className="h-full w-full"
-            title={claseActual.titulo}
-          />
-        ) : (
-          <div className="flex h-full w-full items-center justify-center text-white/60 text-sm">
-            Esta clase está en preparación.
-          </div>
-        )}
-      </div>
+      <VideoDrive
+        slug={especialidad.slug}
+        indice={indice}
+        disponible={!!driveId}
+        titulo={claseActual.titulo}
+      />
 
       <div className="mt-4">
         <BotonVista
