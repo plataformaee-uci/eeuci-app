@@ -29,7 +29,7 @@ export async function GET(request: Request) {
 
   return NextResponse.json(
     {
-      src: `https://drive.google.com/embeddedfolderview?id=${categoria.folderId}#list`,
+      src: `https://drive.google.com/embeddedfolderview?id=${categoria.folderId}#grid`,
     },
     { headers: { "Cache-Control": "no-store" } },
   );
