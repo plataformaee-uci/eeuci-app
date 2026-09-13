@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { createAdminClient, esAdmin } from "@/lib/supabase/admin";
 import { FondoMedico } from "../../_components/FondoMedico";
 import { Logo } from "../../_components/Logo";
+import { BotonEliminarFolio } from "../../_components/BotonEliminarFolio";
 
 type Registro = {
   id: string;
@@ -119,15 +120,21 @@ export default async function AdminPage() {
                     {r.constancia_titulo}
                   </p>
                 </div>
-                <span
-                  className={`shrink-0 text-xs font-bold rounded-full px-3 py-1 ${
-                    r.folio
-                      ? "bg-emerald-500/20 text-emerald-300"
-                      : "bg-white/10 text-white/70"
-                  }`}
-                >
-                  {r.folio ? "Asignado" : "Pendiente"}
-                </span>
+                <div className="shrink-0 flex flex-col items-end gap-2">
+                  <span
+                    className={`text-xs font-bold rounded-full px-3 py-1 ${
+                      r.folio
+                        ? "bg-emerald-500/20 text-emerald-300"
+                        : "bg-white/10 text-white/70"
+                    }`}
+                  >
+                    {r.folio ? "Asignado" : "Pendiente"}
+                  </span>
+                  <BotonEliminarFolio
+                    id={r.id}
+                    titulo={r.constancia_titulo ?? r.email}
+                  />
+                </div>
               </div>
 
               <form
