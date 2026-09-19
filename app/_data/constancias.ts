@@ -23,6 +23,12 @@ export const constancias: Constancia[] = [
     titulo: "Uso de vasopresores en la UCI",
     horas: 2,
   },
+  {
+    id: "cardiologia-3",
+    especialidad: "cardiologia",
+    titulo: "Arritmias letales",
+    horas: 2,
+  },
 
   // ---- Neumología (2 h c/u) ----
   {
@@ -47,6 +53,12 @@ export const constancias: Constancia[] = [
     id: "neumologia-4",
     especialidad: "neumologia",
     titulo: "Caso clínico: SDRA",
+    horas: 2,
+  },
+  {
+    id: "neumologia-5",
+    especialidad: "neumologia",
+    titulo: "Gasometría arterial: tres primeros pasos",
     horas: 2,
   },
 
