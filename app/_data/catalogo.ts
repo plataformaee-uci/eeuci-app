@@ -52,6 +52,10 @@ export const especialidades: Especialidad[] = [
         titulo: "Caso clínico: SDRA",
         driveId: "1AMpQ4-WRwRwtLLvxxYmkLECd_ugm0aUe",
       },
+      {
+        titulo: "Gasometría arterial: tres primeros pasos",
+        driveId: "1e9oL11hNt4v0g5ZKRkSMsSBECO7DzEV-",
+      },
     ],
   },
   {
