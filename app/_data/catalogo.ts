@@ -28,6 +28,10 @@ export const especialidades: Especialidad[] = [
         titulo: "Uso de vasopresores en la UCI",
         driveId: "1wgSCJk_cHN4fnEMxT6SP1mzVO224N9yw",
       },
+      {
+        titulo: "Arritmias letales",
+        driveId: "1gdf-cYRGyFS-aBwis-9obUWB1PaIUA36",
+      },
     ],
   },
   {
