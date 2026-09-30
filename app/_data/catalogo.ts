@@ -108,6 +108,10 @@ export const especialidades: Especialidad[] = [
         titulo: "Equilibrio ácido-base",
         driveId: "1JDvWhoWrk_DNgN96edbu38SNfG4WY_KM",
       },
+      {
+        titulo: "Aspectos generales en TRRC",
+        driveId: "1MQqIh5pqpmx9OXoiF1x7mOKfHvRUMDk6",
+      },
     ],
   },
   {

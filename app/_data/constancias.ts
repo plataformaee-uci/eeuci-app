@@ -113,6 +113,12 @@ export const constancias: Constancia[] = [
     titulo: "Equilibrio ácido-base",
     horas: 2,
   },
+  {
+    id: "nefrologia-3",
+    especialidad: "nefrologia",
+    titulo: "Aspectos generales en TRRC",
+    horas: 2,
+  },
 
   // ---- Quemados (2 h c/u) ----
   {
