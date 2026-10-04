@@ -201,6 +201,12 @@ export const constancias: Constancia[] = [
     titulo: "Síndrome de respuesta inflamatoria en el paciente crítico",
     horas: 2,
   },
+  {
+    id: "miscelaneos-7",
+    especialidad: "miscelaneos",
+    titulo: "Metodología PES",
+    horas: 2,
+  },
 
   // ---- Talleres (4 h — las 2 partes juntas = 1 constancia) ----
   {

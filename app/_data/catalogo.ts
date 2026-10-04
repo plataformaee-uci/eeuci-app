@@ -180,6 +180,10 @@ export const especialidades: Especialidad[] = [
         titulo: "Síndrome de respuesta inflamatoria en el paciente crítico",
         driveId: "1XQErgR0dhuccxs-nTrw_wBzCDghTEp9G",
       },
+      {
+        titulo: "Metodología PES",
+        driveId: "14Ho7ZMS8dLAAEMUm4_K4Mt_g6x0ok9ss",
+      },
     ],
   },
   {
