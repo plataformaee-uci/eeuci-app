@@ -34,7 +34,7 @@ export default function RecuperarPage() {
       <FondoMedico />
       <div className="w-full max-w-sm">
         <div className="text-center mb-6">
-          <span className="mx-auto inline-flex h-16 w-16 overflow-hidden rounded-full bg-white ring-1 ring-white/20">
+          <span className="mx-auto inline-flex h-24 w-24 overflow-hidden rounded-full bg-white ring-1 ring-white/20">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/logo.jpeg"

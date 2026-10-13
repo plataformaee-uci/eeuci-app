@@ -47,7 +47,7 @@ export default function RegistroPage() {
       <main className="min-h-screen flex items-center justify-center px-4">
         <FondoMedico />
         <div className="w-full max-w-sm bg-white rounded-2xl shadow-sm border border-slate-200 p-7 text-center">
-          <span className="mx-auto mb-3 inline-flex h-14 w-14 overflow-hidden rounded-full ring-1 ring-slate-200">
+          <span className="mx-auto mb-3 inline-flex h-20 w-20 overflow-hidden rounded-full ring-1 ring-slate-200">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/logo.jpeg"
@@ -78,7 +78,7 @@ export default function RegistroPage() {
       <FondoMedico />
       <div className="w-full max-w-sm">
         <div className="text-center mb-6">
-          <span className="mx-auto inline-flex h-16 w-16 overflow-hidden rounded-full bg-white ring-1 ring-white/20">
+          <span className="mx-auto inline-flex h-24 w-24 overflow-hidden rounded-full bg-white ring-1 ring-white/20">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/logo.jpeg"
