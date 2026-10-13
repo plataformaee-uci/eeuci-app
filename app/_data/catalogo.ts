@@ -184,6 +184,10 @@ export const especialidades: Especialidad[] = [
         titulo: "Metodología PES",
         driveId: "14Ho7ZMS8dLAAEMUm4_K4Mt_g6x0ok9ss",
       },
+      {
+        titulo: "Terapia transfusional en la UCI",
+        driveId: "1PjO-XC9mz3R4z7Kc_VqzvmBKRWjaXOSi",
+      },
     ],
   },
   {

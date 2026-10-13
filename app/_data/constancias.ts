@@ -207,6 +207,12 @@ export const constancias: Constancia[] = [
     titulo: "Metodología PES",
     horas: 2,
   },
+  {
+    id: "miscelaneos-8",
+    especialidad: "miscelaneos",
+    titulo: "Terapia transfusional en la UCI",
+    horas: 2,
+  },
 
   // ---- Talleres (4 h — las 2 partes juntas = 1 constancia) ----
   {
