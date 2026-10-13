@@ -13,7 +13,7 @@ export function Logo({
       href={href}
       className={`inline-flex items-center gap-2.5 ${className}`}
     >
-      <span className="inline-flex h-9 w-9 shrink-0 overflow-hidden rounded-full ring-1 ring-white/20">
+      <span className="inline-flex h-11 w-11 shrink-0 overflow-hidden rounded-full ring-1 ring-white/20">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/logo.jpeg"
@@ -21,7 +21,7 @@ export function Logo({
           className="h-full w-full scale-[1.08] object-cover"
         />
       </span>
-      <span className="text-lg font-black tracking-tight text-white">
+      <span className="text-xl font-black tracking-tight text-white">
         EE-UCI
       </span>
     </Link>
