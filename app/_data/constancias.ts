@@ -119,6 +119,12 @@ export const constancias: Constancia[] = [
     titulo: "Aspectos generales en TRRC",
     horas: 2,
   },
+  {
+    id: "nefrologia-4",
+    especialidad: "nefrologia",
+    titulo: "Disnatremias en la UCI",
+    horas: 2,
+  },
 
   // ---- Quemados (2 h c/u) ----
   {
@@ -211,6 +217,12 @@ export const constancias: Constancia[] = [
     id: "miscelaneos-8",
     especialidad: "miscelaneos",
     titulo: "Terapia transfusional en la UCI",
+    horas: 2,
+  },
+  {
+    id: "miscelaneos-9",
+    especialidad: "miscelaneos",
+    titulo: "Nutrición en la UCI",
     horas: 2,
   },
 

@@ -112,6 +112,10 @@ export const especialidades: Especialidad[] = [
         titulo: "Aspectos generales en TRRC",
         driveId: "1MQqIh5pqpmx9OXoiF1x7mOKfHvRUMDk6",
       },
+      {
+        titulo: "Disnatremias en la UCI",
+        driveId: "1Ed9OARLaFot8ujr8Uaq5sMrgxqhgLw4c",
+      },
     ],
   },
   {
@@ -187,6 +191,10 @@ export const especialidades: Especialidad[] = [
       {
         titulo: "Terapia transfusional en la UCI",
         driveId: "1PjO-XC9mz3R4z7Kc_VqzvmBKRWjaXOSi",
+      },
+      {
+        titulo: "Nutrición en la UCI",
+        driveId: "1L2Qqu2cB37gDI29Uzblb8o4DdLBFr1bN",
       },
     ],
   },
