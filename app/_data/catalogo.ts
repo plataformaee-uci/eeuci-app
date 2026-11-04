@@ -32,6 +32,10 @@ export const especialidades: Especialidad[] = [
         titulo: "Arritmias letales",
         driveId: "1gdf-cYRGyFS-aBwis-9obUWB1PaIUA36",
       },
+      {
+        titulo: "Código MEGA",
+        driveId: "1-iUrMJourf1rvQrGAcNcOMMVrD2Hahwc",
+      },
     ],
   },
   {

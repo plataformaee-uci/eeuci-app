@@ -29,6 +29,12 @@ export const constancias: Constancia[] = [
     titulo: "Arritmias letales",
     horas: 2,
   },
+  {
+    id: "cardiologia-4",
+    especialidad: "cardiologia",
+    titulo: "Código MEGA",
+    horas: 2,
+  },
 
   // ---- Neumología (2 h c/u) ----
   {
