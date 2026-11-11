@@ -120,6 +120,10 @@ export const especialidades: Especialidad[] = [
         titulo: "Disnatremias en la UCI",
         driveId: "1Ed9OARLaFot8ujr8Uaq5sMrgxqhgLw4c",
       },
+      {
+        titulo: "Cristaloides y albúmina en el paciente crítico",
+        driveId: "1_S0aJ9vQf2dMF0RXR0Pco1gEuy476yyg",
+      },
     ],
   },
   {

@@ -131,6 +131,12 @@ export const constancias: Constancia[] = [
     titulo: "Disnatremias en la UCI",
     horas: 2,
   },
+  {
+    id: "nefrologia-5",
+    especialidad: "nefrologia",
+    titulo: "Cristaloides y albúmina en el paciente crítico",
+    horas: 2,
+  },
 
   // ---- Quemados (2 h c/u) ----
   {
