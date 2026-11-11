@@ -14,8 +14,25 @@ const sourceSerif = Source_Serif_4({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://ee-uci.online"),
   title: "EE-UCI — Entrenamiento de Enfermería en UCI",
   description: "Escuela virtual de enfermería en cuidados intensivos.",
+  icons: { icon: "/logo.jpeg", apple: "/logo.jpeg" },
+  openGraph: {
+    type: "website",
+    locale: "es_MX",
+    url: "https://ee-uci.online",
+    siteName: "EE-UCI",
+    title: "EE-UCI — Entrenamiento de Enfermería en UCI",
+    description: "Escuela virtual de enfermería en cuidados intensivos.",
+    images: [{ url: "/logo.jpeg", alt: "EE-UCI" }],
+  },
+  twitter: {
+    card: "summary",
+    title: "EE-UCI — Entrenamiento de Enfermería en UCI",
+    description: "Escuela virtual de enfermería en cuidados intensivos.",
+    images: ["/logo.jpeg"],
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
