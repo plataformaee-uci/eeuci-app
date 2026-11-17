@@ -181,6 +181,12 @@ export const constancias: Constancia[] = [
     titulo: "Paciente quemado pediátrico",
     horas: 2,
   },
+  {
+    id: "quemados-8",
+    especialidad: "quemados",
+    titulo: "Score Organ Failure Assessment",
+    horas: 2,
+  },
 
   // ---- Misceláneos (2 h c/u) ----
   {

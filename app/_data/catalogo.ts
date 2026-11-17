@@ -160,6 +160,10 @@ export const especialidades: Especialidad[] = [
         titulo: "Paciente quemado pediátrico",
         driveId: "1Oob5pTfBsrdFU5scqSiRZpmDOrPC-ldz",
       },
+      {
+        titulo: "Score Organ Failure Assessment",
+        driveId: "1Rh4Sk12rn1H0f6Z-avpvicadW_DqH7Wp",
+      },
     ],
   },
   {
